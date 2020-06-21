@@ -23,9 +23,9 @@ piece_data = {
     ],
     "U5": [
         [0, 0, 0, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 1, 0, 0, 0],
-        [0, 1, 1, 0, 0],
+        [0, 0, 1, 1, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 1, 0],
         [0, 0, 0, 0, 0]
     ],
     "V5": [
@@ -58,10 +58,10 @@ piece_data = {
     ],
     "W5": [
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
         [0, 1, 0, 0, 0],
         [0, 1, 1, 0, 0],
-        [0, 0, 1, 1, 0]
+        [0, 0, 1, 1, 0],
+        [0, 0, 0, 0, 0]
     ],
     "P5": [
         [0, 0, 0, 0, 0],
@@ -87,32 +87,32 @@ piece_data = {
 
     // pieces of size 4
     "O4": [
-        [1, 1, 0, 0, 0],
-        [1, 1, 0, 0, 0],
         [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0]
     ],
     "L4": [
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
         [0, 1, 1, 1, 0],
-        [0, 0, 0, 1, 0]
+        [0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0]
     ],
     "T4": [
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
         [0, 1, 1, 1, 0],
-        [0, 0, 1, 0, 0]
+        [0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0]
     ],
     "Z4": [
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0],
         [0, 0, 1, 1, 0],
-        [0, 0, 0, 1, 1]
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
     ],
     "I4": [
         [0, 0, 0, 0, 0],
@@ -124,34 +124,34 @@ piece_data = {
 
     // pieces of size 3
     "V3": [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
         [0, 0, 1, 0, 0],
         [0, 0, 1, 1, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0]
     ],
     "I3": [
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
         [0, 0, 1, 0, 0],
         [0, 0, 1, 0, 0],
-        [0, 0, 1, 0, 0]
+        [0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0]
     ],
 
     // pieces of size 2
     "I2": [
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0]
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0]
     ],
 
     // pieces of size 1
     "I1": [
-        [1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0]
     ]
@@ -186,14 +186,17 @@ class Piece {
         // ctx.fillStyle = fillStyle;
         for(var i = 0; i < pieceSize; i++) {
             for(var j = 0; j < pieceSize; j++) {
+                var xPosNew = xPos + (i * boxSize / pieceSize);
+                var yPosNew = yPos + (j * boxSize / pieceSize);
                 if(this.data[j][i]) {
-                    var xPosNew = xPos + (i * boxSize / pieceSize);
-                    var yPosNew = yPos + (j * boxSize / pieceSize);
+                    // var xPosNew = xPos + (i * boxSize / pieceSize);
+                    // var yPosNew = yPos + (j * boxSize / pieceSize);
 
                     ctx.fillStyle = fillStyle;
                     ctx.fillRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
-                    ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
+                    // ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
                 }
+                ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
             }
         }
     }
@@ -238,9 +241,9 @@ class Game {
         this.numPlayers = numPlayers;
         // TODO: clean up these arguments
         this.player1 = new Player(25, 50, boxSize, 'rgb(0, 0, 200, 0.5)');
-        this.player2 = new Player(25, 275, boxSize, 'rgb(200, 0, 0, 0.5)');
+        this.player2 = new Player(25, 250, boxSize, 'rgb(200, 0, 0, 0.5)');
         this.player3 = new Player(675, 50, boxSize, 'rgb(0, 200, 0, 0.5)');
-        this.player4 = new Player(675, 275, boxSize, 'rgb(200, 200, 0, 0.5)');
+        this.player4 = new Player(675, 250, boxSize, 'rgb(200, 200, 0, 0.5)');
     }
 
     draw(ctx) {
