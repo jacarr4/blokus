@@ -1,0 +1,64 @@
+function draw() {
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'green';
+    ctx.fillRect(10, 10, 150, 100);
+}
+
+function draw2() {
+    var canvas = document.getElementById('mainCanvas');
+    if(canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'rgb(200, 0, 0)';
+        ctx.fillRect(10, 10, 50, 50);
+
+        ctx.fillStyle = 'rgb(0, 0, 200, 0.5)';
+        ctx.fillRect(30, 30, 50, 50);
+    }
+}
+
+function draw3() {
+    var canvas = document.getElementById('mainCanvas');
+    if (canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+  
+      ctx.fillRect(25, 25, 100, 100);
+      ctx.clearRect(45, 45, 60, 60);
+      ctx.strokeRect(50, 50, 50, 50);
+    }
+}
+
+function draw4() {
+var canvas = document.getElementById('mainCanvas');
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.moveTo(75, 50);
+        ctx.lineTo(100, 75);
+        ctx.lineTo(100, 25);
+        ctx.fill();
+    }
+}
+
+function drawgrid() {
+    var canvas = document.getElementById('mainCanvas');
+    var startOffset = 50;
+    var boxSize = 20;
+    var gridSize = 20; // in tiles
+    if(canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        for(i = 0; i < gridSize; i++) {
+            for(j = 0; j < gridSize; j++) {
+                // ctx.fillStyle = 'rgb(0, 0, 0)';
+                var xPos = startOffset + i * boxSize;
+                var yPos = startOffset + j * boxSize;
+                //ctx.fillRect(xPos, yPos, boxSize, boxSize);
+                ctx.strokeRect(xPos, yPos, boxSize, boxSize);
+            }
+        }
+    }
+}
