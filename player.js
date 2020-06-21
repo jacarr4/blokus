@@ -26,12 +26,19 @@ class Player {
         for(var i = 0; i < this.numPieces(); i++) {
             var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
             var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
-            this.pieces[i].draw(ctx, curPosX, curPosY, this.boxSize, this.color);
+            this.pieces[i].setBoxSize(this.boxSize);
+            this.pieces[i].setPosition(curPosX, curPosY);
+            this.pieces[i].draw(ctx, this.color);
         }
     }
 
     handleMouseDown(x, y) {
-        console.log("handleMouseDown in Player: x=" + x + ", y=" + y);
+        for(var i = 0; i < this.pieces.length; i++) {
+            if(this.pieces[i].contains(x, y)) {
+                console.log("Selected piece " + i + ": ");
+                console.log(this.pieces[i]);
+            }
+        }
     }
 
     handleMouseMove(x, y) {

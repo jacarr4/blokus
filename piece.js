@@ -3,25 +3,58 @@ class Piece {
         this.data = data;
     }
 
-    draw(ctx, xPos, yPos, boxSize, fillStyle) {
+    setBoxSize(boxSize) {
+        this.boxSize = boxSize;
+    }
+
+    setPosition(xPos, yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
+
+    contains(x, y) {
+        return this.xPos <= x && this.xPos + this.boxSize >= x && this.yPos <= y && this.yPos + this.boxSize >= y;
+    }
+
+    draw(ctx, fillStyle) {
         var pieceSize = 5;
         // ctx.fillStyle = fillStyle;
         for(var i = 0; i < pieceSize; i++) {
             for(var j = 0; j < pieceSize; j++) {
-                var xPosNew = xPos + (i * boxSize / pieceSize);
-                var yPosNew = yPos + (j * boxSize / pieceSize);
+                var xPosNew = this.xPos + (i * this.boxSize / pieceSize);
+                var yPosNew = this.yPos + (j * this.boxSize / pieceSize);
                 if(this.data[j][i]) {
                     // var xPosNew = xPos + (i * boxSize / pieceSize);
                     // var yPosNew = yPos + (j * boxSize / pieceSize);
 
                     ctx.fillStyle = fillStyle;
-                    ctx.fillRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
+                    ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                     // ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
                 }
-                ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
+                ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
             }
         }
     }
+
+    // draw(ctx, xPos, yPos, boxSize, fillStyle) {
+    //     var pieceSize = 5;
+    //     // ctx.fillStyle = fillStyle;
+    //     for(var i = 0; i < pieceSize; i++) {
+    //         for(var j = 0; j < pieceSize; j++) {
+    //             var xPosNew = xPos + (i * boxSize / pieceSize);
+    //             var yPosNew = yPos + (j * boxSize / pieceSize);
+    //             if(this.data[j][i]) {
+    //                 // var xPosNew = xPos + (i * boxSize / pieceSize);
+    //                 // var yPosNew = yPos + (j * boxSize / pieceSize);
+
+    //                 ctx.fillStyle = fillStyle;
+    //                 ctx.fillRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
+    //                 // ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
+    //             }
+    //             ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
+    //         }
+    //     }
+    // }
 }
 
 piece_data = {
