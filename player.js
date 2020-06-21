@@ -29,4 +29,16 @@ class Player {
             this.pieces[i].draw(ctx, curPosX, curPosY, this.boxSize, this.color);
         }
     }
+
+    handleMouseDown(x, y) {
+        console.log("handleMouseDown in Player: x=" + x + ", y=" + y);
+    }
+
+    handleMouseMove(x, y) {
+        console.log("handleMouseMove in Player: x=" + x + ", y=" + y);
+    }
+
+    handleMouseUp(x, y) {
+        console.log("handleMouseUp in Player: x=" + x + ", y=" + y);
+    }
 }

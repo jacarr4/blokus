@@ -15,4 +15,16 @@ class Grid {
             }
         }
     }
+
+    handleMouseDown(x, y) {
+        console.log("handleMouseDown in Grid: x=" + x + ", y=" + y);
+    }
+
+    handleMouseMove(x, y) {
+        console.log("handleMouseMove in Grid: x=" + x + ", y=" + y);
+    }
+
+    handleMouseUp(x, y) {
+        console.log("handleMouseUp in Grid: x=" + x + ", y=" + y);
+    }
 }

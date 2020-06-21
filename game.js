@@ -7,6 +7,8 @@ class Game {
         this.player2 = new Player(25, 250, boxSize, 'rgb(200, 0, 0, 0.5)');
         this.player3 = new Player(675, 50, boxSize, 'rgb(0, 200, 0, 0.5)');
         this.player4 = new Player(675, 250, boxSize, 'rgb(200, 200, 0, 0.5)');
+
+        this.objects = [this.grid, this.player1, this.player2, this.player3, this.player4];
     }
 
     draw(ctx) {
@@ -19,13 +21,22 @@ class Game {
 
     handleMouseDown(x, y) {
         console.log("Mouse Down at x=" + x + ", y=" + y);
+        for(var i = 0; i < this.objects.length; i++) {
+            this.objects[i].handleMouseDown(x, y);
+        }
     }
 
     handleMouseMove(x, y) {
         console.log("Mouse Move at x=" + x + ", y=" + y);
+        for(var i = 0; i < this.objects.length; i++) {
+            this.objects[i].handleMouseMove(x, y);
+        }
     }
 
     handleMouseUp(x, y) {
         console.log("Mouse Up at x=" + x + ", y=" + y);
+        for(var i = 0; i < this.objects.length; i++) {
+            this.objects[i].handleMouseUp(x, y);
+        }
     }
 };
