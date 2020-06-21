@@ -16,4 +16,16 @@ class Game {
         this.player3.drawPieces(ctx);
         this.player4.drawPieces(ctx);
     }
+
+    handleMouseDown(x, y) {
+        console.log("Mouse Down at x=" + x + ", y=" + y);
+    }
+
+    handleMouseMove(x, y) {
+        console.log("Mouse Move at x=" + x + ", y=" + y);
+    }
+
+    handleMouseUp(x, y) {
+        console.log("Mouse Up at x=" + x + ", y=" + y);
+    }
 };

@@ -10,29 +10,14 @@ function init(canvasWidth, canvasHeight) {
     }
 
     canvas.addEventListener('mousedown', e => {
-        x = e.offsetX;
-        y = e.offsetY;
-        // console.log('mousedown:');
-        // console.log('x: ' + x);
-        // console.log('y: ' + y);
-        // console.log('\n');
+        game.handleMouseDown(e.offsetX, e.offsetY);
     });
 
     canvas.addEventListener('mousemove', e => {
-        x = e.offsetX;
-        y = e.offsetY;
-        // console.log('mousemove:');
-        // console.log('x: ' + x);
-        // console.log('y: ' + y);
-        // console.log('\n');
+        game.handleMouseMove(e.offsetX, e.offsetY);
     });
 
     canvas.addEventListener('mouseup', e => {
-        x = e.offsetX;
-        y = e.offsetY;
-        // console.log('mouseup:');
-        // console.log('x: ' + x);
-        // console.log('y: ' + y);
-        // console.log('\n');
+        game.handleMouseUp(e.offsetX, e.offsetY);
     });
 }
