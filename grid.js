@@ -29,11 +29,13 @@ class Grid {
                 var xPos = this.startPosX + i * this.boxSize;
                 var yPos = this.startPosY + j * this.boxSize;
 
+                ctx.fillStyle = 'rgb(200, 200, 200)';
+                ctx.fillRect(xPos, yPos, this.boxSize, this.boxSize);
                 ctx.strokeRect(xPos, yPos, this.boxSize, this.boxSize);
             }
         }
 
-        var pieceSize = 5;
+        var pieceSize = 5; // TODO: make global
 
         for(var k = 0; k < this.pieces.length; k++) {
             ctx.fillStyle = this.pieces[k].fillStyle;
@@ -42,7 +44,8 @@ class Grid {
                     if(this.pieces[k].data[j][i]) {
                         var xPos = this.startPosX + this.boxSize * (this.piecesX[k] - 2 + i);
                         var yPos = this.startPosY + this.boxSize * (this.piecesY[k] - 2 + j);
-                        ctx.fillRect(xPos, yPos, this.boxSize, this.boxSize);
+                        ctx.fillRect(xPos, yPos, this.boxSize, this.boxSize); // draw the piece
+                        ctx.strokeRect(xPos, yPos, this.boxSize, this.boxSize); // redraw the border so it's dark
                     }
                 }
             }         

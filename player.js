@@ -11,8 +11,8 @@ class Player {
     }
 
     createPieces() {
-        var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
-        var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
+        // var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
+        // var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
 
         var pieces_lcl = [];
         var i = 0
@@ -49,7 +49,7 @@ class Player {
         }
     }
 
-    handleMouseDown(x, y) {
+    selectPiece(x, y) {
         if(this.selectedPieceIndex) {
             return this.pieces[this.selectedPieceIndex];
         }
@@ -60,6 +60,12 @@ class Player {
             }
         }
         return this.pieces[this.selectedPieceIndex];
+    }
+
+    deselectPiece(x, y) {
+        var pieceGridSize = 5;
+        this.pieces[this.selectedPieceIndex].resetPiece(this.xPos + (this.selectedPieceIndex % pieceGridSize) * this.boxSize, this.yPos + Math.floor(this.selectedPieceIndex / pieceGridSize) * this.boxSize);
+        this.selectedPieceIndex = null;
     }
 
     placeSelectedPiece(x, y) {

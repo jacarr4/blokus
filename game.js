@@ -7,6 +7,10 @@ class Game {
         this.player2 = new Player(25, 250, boxSize, 'rgb(200, 0, 0, 0.5)');
         this.player3 = new Player(675, 50, boxSize, 'rgb(0, 200, 0, 0.5)');
         this.player4 = new Player(675, 250, boxSize, 'rgb(200, 200, 0, 0.5)');
+        // this.player1 = new Player(25, 50, boxSize, '#5E81AC');
+        // this.player2 = new Player(25, 250, boxSize, '#BF616A');
+        // this.player3 = new Player(675, 50, boxSize, '#A3BE8C');
+        // this.player4 = new Player(675, 250, boxSize, '#EBCB8B');
 
         this.players = [this.player1, this.player2, this.player3, this.player4];
         this.playerTurn = 0;
@@ -24,10 +28,10 @@ class Game {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        this.grid.draw(ctx);
         for(var i = 0; i < this.numPlayers; i++) {
             this.players[i].drawPiecesForFrame(ctx);
         }
-        this.grid.draw(ctx);
         window.requestAnimationFrame(()=>this.draw());
     }
 
@@ -36,7 +40,7 @@ class Game {
     }
 
     handleMouseDown(x, y) {
-        this.selectedPiece = this.players[this.playerTurn].handleMouseDown(x, y);
+        this.selectedPiece = this.players[this.playerTurn].selectPiece(x, y);
     }
 
     setMousePos(x, y) {
@@ -50,6 +54,9 @@ class Game {
             this.grid.addPiece(this.selectedPiece, x, y);
             this.players[this.playerTurn].placeSelectedPiece(x, y);
             this.updatePlayerTurn();
+        }
+        else {
+            this.players[this.playerTurn].deselectPiece(x, y);
         }
         this.selectedPiece = null;
     }

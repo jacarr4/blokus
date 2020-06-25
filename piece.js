@@ -31,6 +31,11 @@ class Piece {
         this.yPos = yPos;
     }
 
+    resetPiece(x, y) {
+        this.setPosition(x, y);
+        this.setBoxSize(40);
+    }
+
     setColor(fillStyle) {
         this.fillStyle = fillStyle;
     }
