@@ -39,8 +39,12 @@ class Game {
         this.playerTurn = (this.playerTurn + 1) % this.numPlayers;
     }
 
-    handleMouseDown(x, y) {
-        this.selectedPiece = this.players[this.playerTurn].selectPiece(x, y);
+    handleMouseDown(x, y, button) {
+        if(button == 0) {
+            this.selectedPiece = this.players[this.playerTurn].selectPiece(x, y);
+        } else if( button == 2 ) {
+            this.players[this.playerTurn].rotateSelectedPiece();
+        }
     }
 
     setMousePos(x, y) {
@@ -49,15 +53,17 @@ class Game {
         }
     }
 
-    handleMouseUp(x, y) {
-        if(this.selectedPiece && this.grid.contains(x, y)) {
-            this.grid.addPiece(this.selectedPiece, x, y);
-            this.players[this.playerTurn].placeSelectedPiece(x, y);
-            this.updatePlayerTurn();
+    handleMouseUp(x, y, button) {
+        if(button == 0) {
+            if(this.selectedPiece && this.grid.contains(x, y)) {
+                this.grid.addPiece(this.selectedPiece, x, y);
+                this.players[this.playerTurn].placeSelectedPiece(x, y);
+                this.updatePlayerTurn();
+            }
+            else {
+                this.players[this.playerTurn].deselectPiece(x, y);
+            }
+            this.selectedPiece = null;
         }
-        else {
-            this.players[this.playerTurn].deselectPiece(x, y);
-        }
-        this.selectedPiece = null;
     }
 };

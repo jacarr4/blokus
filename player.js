@@ -11,9 +11,6 @@ class Player {
     }
 
     createPieces() {
-        // var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
-        // var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
-
         var pieces_lcl = [];
         var i = 0
         var pieceGridSize = 5;
@@ -50,11 +47,10 @@ class Player {
     }
 
     selectPiece(x, y) {
-        if(this.selectedPieceIndex) {
-            return this.pieces[this.selectedPieceIndex];
-        }
         for(var i = 0; i < this.pieces.length; i++) {
             if(this.pieces[i].contains(x, y)) {
+                this.selectedPieceX = this.pieces[i].x;
+                this.selectedPieceY = this.pieces[i].y;
                 this.selectedPieceIndex = i;
                 this.pieces[this.selectedPieceIndex].setBoxSize(100);
             }
@@ -62,10 +58,18 @@ class Player {
         return this.pieces[this.selectedPieceIndex];
     }
 
+    rotateSelectedPiece() {
+        if(this.selectedPieceIndex != null) {
+            console.log("Rotating selected piece");
+            this.pieces[this.selectedPieceIndex].rotate();
+        }
+    }
+
     deselectPiece(x, y) {
-        var pieceGridSize = 5;
-        this.pieces[this.selectedPieceIndex].resetPiece(this.xPos + (this.selectedPieceIndex % pieceGridSize) * this.boxSize, this.yPos + Math.floor(this.selectedPieceIndex / pieceGridSize) * this.boxSize);
-        this.selectedPieceIndex = null;
+        if(this.selectedPieceIndex != null) {
+            this.pieces[this.selectedPieceIndex].resetPiece(this.selectedPieceX, this.selectedPieceY);
+            this.selectedPieceIndex = null;
+        }
     }
 
     placeSelectedPiece(x, y) {

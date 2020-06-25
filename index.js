@@ -11,15 +11,18 @@ function init(canvasWidth, canvasHeight) {
     }
 
     canvas.addEventListener('mousedown', e => {
-        game.handleMouseDown(e.offsetX, e.offsetY);
+        game.handleMouseDown(e.offsetX, e.offsetY, e.button);
     });
 
     canvas.addEventListener('mousemove', e => {
         game.setMousePos(e.offsetX, e.offsetY);
-        // game.handleMouseMove(e.offsetX, e.offsetY);
     });
 
     canvas.addEventListener('mouseup', e => {
-        game.handleMouseUp(e.offsetX, e.offsetY);
+        game.handleMouseUp(e.offsetX, e.offsetY, e.button);
     });
+
+    document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+    }, false);
 }

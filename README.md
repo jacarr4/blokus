@@ -1,8 +1,8 @@
 # blokus
 TODO:
-* turn based play
+* box size/piece size refactor
+* piece selection/placement animations
 * undo
-* ability to rotate pieces
 * enforce rules for placing pieces (must touch same color pieces at corners only, no overlapping)
 * scoreboard
 * communicate with server

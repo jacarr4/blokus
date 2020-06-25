@@ -12,6 +12,14 @@ class Piece {
         return this._data;
     }
 
+    get x() {
+        return this.xPos;
+    }
+
+    get y() {
+        return this.yPos;
+    }
+
     setBoxSize(boxSize) {
         this.boxSize = boxSize;
     }
@@ -60,6 +68,26 @@ class Piece {
                 }
             }
         }
+    }
+
+    rotate() {
+        var pieceSize = 5;
+        var newData = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ];
+        for(var i = 0; i < Math.floor(pieceSize / 2); i++) {
+            for(var j = 0; j < Math.floor(pieceSize - i - 1); j++) {
+                newData[i][j] = this._data[pieceSize - 1 - j][i];
+                newData[pieceSize - 1 - j][i] = this._data[pieceSize - 1 - i][pieceSize - 1 - j];
+                newData[pieceSize - 1 - i][pieceSize - 1 - j] = this._data[j][pieceSize - 1 - i];
+                newData[j][pieceSize - 1 - i] = this._data[i][j];
+            }
+        }
+        this._data = newData;
     }
 }
 
