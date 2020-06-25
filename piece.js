@@ -87,6 +87,7 @@ class Piece {
                 newData[j][pieceSize - 1 - i] = this._data[i][j];
             }
         }
+        newData[2][2] = this._data[2][2];
         this._data = newData;
     }
 }

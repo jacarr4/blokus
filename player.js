@@ -8,6 +8,7 @@ class Player {
         this.placedPieces = [];
         this.selectedPiece = null;
         this.selectedPieceIndex = null;
+        this.hoveredPieceIndex = null;
     }
 
     createPieces() {
@@ -35,8 +36,22 @@ class Player {
     }
 
     setMousePos(x, y) {
+        if(this.hoveredPieceIndex != null) {
+            if(this.selectedPieceIndex == null) {
+                this.pieces[this.hoveredPieceIndex].setBoxSize(40);
+            }
+            this.hoveredPieceIndex = null;
+        }
+
         if(this.selectedPieceIndex != null) {
             this.pieces[this.selectedPieceIndex].setPosition(x, y);
+        } else {
+            for(var i = 0; i < this.pieces.length; i++) {
+                if(this.pieces[i].contains(x, y)) {
+                    this.hoveredPieceIndex = i;
+                    this.pieces[this.hoveredPieceIndex].setBoxSize(50);
+                }
+            }
         }
     }
 
@@ -60,7 +75,6 @@ class Player {
 
     rotateSelectedPiece() {
         if(this.selectedPieceIndex != null) {
-            console.log("Rotating selected piece");
             this.pieces[this.selectedPieceIndex].rotate();
         }
     }

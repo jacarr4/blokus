@@ -48,9 +48,7 @@ class Game {
     }
 
     setMousePos(x, y) {
-        if(this.selectedPiece) {
-            this.players[this.playerTurn].setMousePos(x, y);
-        }
+        this.players[this.playerTurn].setMousePos(x, y);
     }
 
     handleMouseUp(x, y, button) {
