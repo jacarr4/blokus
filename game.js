@@ -11,7 +11,7 @@ class Game {
         this.players = [this.player1, this.player2, this.player3, this.player4];
         this.playerTurn = 0;
 
-        this.objects = [this.grid, this.player1, this.player2, this.player3, this.player4];
+        this.selectedPiece = null;
     }
 
     setMousePos(x, y) {
@@ -36,7 +36,7 @@ class Game {
     }
 
     handleMouseDown(x, y) {
-        this.players[this.playerTurn].handleMouseDown(x, y);
+        this.selectedPiece = this.players[this.playerTurn].handleMouseDown(x, y);
     }
 
     handleMouseMove(x, y) {
@@ -44,8 +44,10 @@ class Game {
     }
 
     handleMouseUp(x, y) {
-        for(var i = 0; i < this.players.length; i++) {
-            this.players[i].handleMouseUp(x, y);
+        if(this.selectedPiece && this.grid.contains(x, y)) {
+            this.grid.addPiece(this.selectedPiece, x, y);
+            this.players[this.playerTurn].placeSelectedPiece(x, y);
         }
+        this.selectedPiece = null;
     }
 };

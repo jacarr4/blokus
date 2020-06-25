@@ -5,6 +5,7 @@ class Player {
         this.boxSize = boxSize * 2; //TODO: clean up
         this.color = color;
         this.pieces = this.createPieces();
+        this.placedPieces = [];
         this.selectedPiece = null;
         this.selectedPieceIndex = null;
     }
@@ -44,7 +45,7 @@ class Player {
 
     drawPiecesForFrame(ctx) {
         for(var i = 0; i < this.numPieces; i++) {
-            this.pieces[i].draw(ctx, this.color);
+            this.pieces[i].drawCenter(ctx);
         }
     }
 
@@ -55,15 +56,12 @@ class Player {
                 this.pieces[i].setBoxSize(100);
             }
         }
+        return this.pieces[this.selectedPieceIndex];
     }
 
-    handleMouseMove(x, y) {
-        if(this.selectedPiece) {
-            console.log( "moving selected piece: " + this.selectedPiece.name );
-        }
-    }
-
-    handleMouseUp(x, y) {
+    placeSelectedPiece(x, y) {
+        var piece = this.pieces.splice(this.selectedPieceIndex, 1);
+        this.placedPieces.push(piece);
         this.selectedPieceIndex = null;
     }
 }

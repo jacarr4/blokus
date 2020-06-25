@@ -1,11 +1,15 @@
 class Piece {
     constructor(name, data) {
         this._name = name;
-        this.data = data;
+        this._data = data;
     }
 
     get name() {
         return this._name;
+    }
+
+    get data() {
+        return this._data;
     }
 
     setBoxSize(boxSize) {
@@ -13,9 +17,15 @@ class Piece {
     }
 
     get getBoxSize() {
-        return this.boxSize
+        return this.boxSize;
     }
 
+    get getColor() {
+        return this.fillStyle;
+    }
+
+    // this represents the position of the center tile's top left corner
+    // TODO: make it true center
     setPosition(xPos, yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -26,17 +36,23 @@ class Piece {
     }
 
     contains(x, y) {
-        return this.xPos <= x && this.xPos + this.boxSize >= x && this.yPos <= y && this.yPos + this.boxSize >= y;
+        return Math.abs(x - this.xPos) < this.boxSize/2 && Math.abs(y - this.yPos) < this.boxSize/2;
     }
 
-    erase(ctx) {
+    drawCenter(ctx) {
         var pieceSize = 5;
 
         for(var i = 0; i < pieceSize; i++) {
             for(var j = 0; j < pieceSize; j++) {
-                var xPosNew = this.xPos + (i * this.boxSize / pieceSize);
-                var yPosNew = this.yPos + (j * this.boxSize / pieceSize);
-                ctx.clearRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize)
+                var iAdj = i - Math.floor(pieceSize/2);
+                var jAdj = j - Math.floor(pieceSize/2);
+                var xPosNew = this.xPos + (iAdj * this.boxSize / pieceSize);
+                var yPosNew = this.yPos + (jAdj * this.boxSize / pieceSize);
+                if(this._data[j][i]) {
+                    ctx.fillStyle = this.fillStyle;
+                    ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
+                    ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
+                }
             }
         }
     }
@@ -46,17 +62,14 @@ class Piece {
 
         for(var i = 0; i < pieceSize; i++) {
             for(var j = 0; j < pieceSize; j++) {
-                var xPosNew = this.xPos + (i * this.boxSize / pieceSize);
-                var yPosNew = this.yPos + (j * this.boxSize / pieceSize);
-                if(this.data[j][i]) {
-                    // var xPosNew = xPos + (i * boxSize / pieceSize);
-                    // var yPosNew = yPos + (j * boxSize / pieceSize);
+                if(this._data[j][i]) {
+                    var xPosNew = xPos + (i * boxSize / pieceSize);
+                    var yPosNew = yPos + (j * boxSize / pieceSize);
 
                     ctx.fillStyle = this.fillStyle;
                     ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                     ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                 }
-                // ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
             }
         }
     }
