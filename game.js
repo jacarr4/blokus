@@ -14,10 +14,6 @@ class Game {
         this.selectedPiece = null;
     }
 
-    setMousePos(x, y) {
-        this.players[this.playerTurn].setMousePos(x, y);
-    }
-
     setCtx(ctx) {
         this.ctx = ctx;
     }
@@ -35,18 +31,25 @@ class Game {
         window.requestAnimationFrame(()=>this.draw());
     }
 
+    updatePlayerTurn() {
+        this.playerTurn = (this.playerTurn + 1) % this.numPlayers;
+    }
+
     handleMouseDown(x, y) {
         this.selectedPiece = this.players[this.playerTurn].handleMouseDown(x, y);
     }
 
-    handleMouseMove(x, y) {
-        this.players[this.playerTurn].setMousePos(x, y);
+    setMousePos(x, y) {
+        if(this.selectedPiece) {
+            this.players[this.playerTurn].setMousePos(x, y);
+        }
     }
 
     handleMouseUp(x, y) {
         if(this.selectedPiece && this.grid.contains(x, y)) {
             this.grid.addPiece(this.selectedPiece, x, y);
             this.players[this.playerTurn].placeSelectedPiece(x, y);
+            this.updatePlayerTurn();
         }
         this.selectedPiece = null;
     }

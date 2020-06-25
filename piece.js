@@ -40,6 +40,7 @@ class Piece {
     }
 
     drawCenter(ctx) {
+        ctx.fillStyle = this.fillStyle;
         var pieceSize = 5;
 
         for(var i = 0; i < pieceSize; i++) {
@@ -49,24 +50,6 @@ class Piece {
                 var xPosNew = this.xPos + (iAdj * this.boxSize / pieceSize);
                 var yPosNew = this.yPos + (jAdj * this.boxSize / pieceSize);
                 if(this._data[j][i]) {
-                    ctx.fillStyle = this.fillStyle;
-                    ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
-                    ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
-                }
-            }
-        }
-    }
-
-    draw(ctx) {
-        var pieceSize = 5;
-
-        for(var i = 0; i < pieceSize; i++) {
-            for(var j = 0; j < pieceSize; j++) {
-                if(this._data[j][i]) {
-                    var xPosNew = xPos + (i * boxSize / pieceSize);
-                    var yPosNew = yPos + (j * boxSize / pieceSize);
-
-                    ctx.fillStyle = this.fillStyle;
                     ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                     ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                 }

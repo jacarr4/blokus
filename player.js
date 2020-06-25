@@ -38,7 +38,7 @@ class Player {
     }
 
     setMousePos(x, y) {
-        if(this.selectedPieceIndex) {
+        if(this.selectedPieceIndex != null) {
             this.pieces[this.selectedPieceIndex].setPosition(x, y);
         }
     }
@@ -50,10 +50,13 @@ class Player {
     }
 
     handleMouseDown(x, y) {
+        if(this.selectedPieceIndex) {
+            return this.pieces[this.selectedPieceIndex];
+        }
         for(var i = 0; i < this.pieces.length; i++) {
             if(this.pieces[i].contains(x, y)) {
                 this.selectedPieceIndex = i;
-                this.pieces[i].setBoxSize(100);
+                this.pieces[this.selectedPieceIndex].setBoxSize(100);
             }
         }
         return this.pieces[this.selectedPieceIndex];
