@@ -1,10 +1,19 @@
 class Piece {
-    constructor(data) {
+    constructor(name, data) {
+        this._name = name;
         this.data = data;
+    }
+
+    get name() {
+        return this._name;
     }
 
     setBoxSize(boxSize) {
         this.boxSize = boxSize;
+    }
+
+    get getBoxSize() {
+        return this.boxSize
     }
 
     setPosition(xPos, yPos) {
@@ -12,13 +21,29 @@ class Piece {
         this.yPos = yPos;
     }
 
+    setColor(fillStyle) {
+        this.fillStyle = fillStyle;
+    }
+
     contains(x, y) {
         return this.xPos <= x && this.xPos + this.boxSize >= x && this.yPos <= y && this.yPos + this.boxSize >= y;
     }
 
-    draw(ctx, fillStyle) {
+    erase(ctx) {
         var pieceSize = 5;
-        // ctx.fillStyle = fillStyle;
+
+        for(var i = 0; i < pieceSize; i++) {
+            for(var j = 0; j < pieceSize; j++) {
+                var xPosNew = this.xPos + (i * this.boxSize / pieceSize);
+                var yPosNew = this.yPos + (j * this.boxSize / pieceSize);
+                ctx.clearRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize)
+            }
+        }
+    }
+
+    draw(ctx) {
+        var pieceSize = 5;
+
         for(var i = 0; i < pieceSize; i++) {
             for(var j = 0; j < pieceSize; j++) {
                 var xPosNew = this.xPos + (i * this.boxSize / pieceSize);
@@ -27,34 +52,14 @@ class Piece {
                     // var xPosNew = xPos + (i * boxSize / pieceSize);
                     // var yPosNew = yPos + (j * boxSize / pieceSize);
 
-                    ctx.fillStyle = fillStyle;
+                    ctx.fillStyle = this.fillStyle;
                     ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
-                    // ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
+                    ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                 }
-                ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
+                // ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
             }
         }
     }
-
-    // draw(ctx, xPos, yPos, boxSize, fillStyle) {
-    //     var pieceSize = 5;
-    //     // ctx.fillStyle = fillStyle;
-    //     for(var i = 0; i < pieceSize; i++) {
-    //         for(var j = 0; j < pieceSize; j++) {
-    //             var xPosNew = xPos + (i * boxSize / pieceSize);
-    //             var yPosNew = yPos + (j * boxSize / pieceSize);
-    //             if(this.data[j][i]) {
-    //                 // var xPosNew = xPos + (i * boxSize / pieceSize);
-    //                 // var yPosNew = yPos + (j * boxSize / pieceSize);
-
-    //                 ctx.fillStyle = fillStyle;
-    //                 ctx.fillRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
-    //                 // ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
-    //             }
-    //             ctx.strokeRect(xPosNew, yPosNew, boxSize/pieceSize, boxSize/pieceSize);
-    //         }
-    //     }
-    // }
 }
 
 piece_data = {

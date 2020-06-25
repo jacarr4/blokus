@@ -1,11 +1,12 @@
 function init(canvasWidth, canvasHeight) {
     var gridSize = 20;
     var boxSize = 20;
-    numPlayers = 1;
+    numPlayers = 4;
     var game = new Game(canvasWidth, canvasHeight, gridSize, boxSize, numPlayers);
     var canvas = document.getElementById('mainCanvas');
     if(canvas.getContext) {
         var ctx = canvas.getContext('2d');
+        game.setCtx(ctx);
         game.draw(ctx);
     }
 
@@ -14,7 +15,8 @@ function init(canvasWidth, canvasHeight) {
     });
 
     canvas.addEventListener('mousemove', e => {
-        game.handleMouseMove(e.offsetX, e.offsetY);
+        game.setMousePos(e.offsetX, e.offsetY);
+        // game.handleMouseMove(e.offsetX, e.offsetY);
     });
 
     canvas.addEventListener('mouseup', e => {

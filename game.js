@@ -8,35 +8,44 @@ class Game {
         this.player3 = new Player(675, 50, boxSize, 'rgb(0, 200, 0, 0.5)');
         this.player4 = new Player(675, 250, boxSize, 'rgb(200, 200, 0, 0.5)');
 
+        this.players = [this.player1, this.player2, this.player3, this.player4];
+        this.playerTurn = 0;
+
         this.objects = [this.grid, this.player1, this.player2, this.player3, this.player4];
     }
 
-    draw(ctx) {
+    setMousePos(x, y) {
+        this.players[this.playerTurn].setMousePos(x, y);
+    }
+
+    setCtx(ctx) {
+        this.ctx = ctx;
+    }
+
+    draw() {
+        var canvas = document.getElementById('mainCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for(var i = 0; i < this.numPlayers; i++) {
+            this.players[i].drawPiecesForFrame(ctx);
+        }
         this.grid.draw(ctx);
-        this.player1.drawPieces(ctx);
-        this.player2.drawPieces(ctx);
-        this.player3.drawPieces(ctx);
-        this.player4.drawPieces(ctx);
+        window.requestAnimationFrame(()=>this.draw());
     }
 
     handleMouseDown(x, y) {
-        console.log("Mouse Down at x=" + x + ", y=" + y);
-        for(var i = 0; i < this.objects.length; i++) {
-            this.objects[i].handleMouseDown(x, y);
-        }
+        this.players[this.playerTurn].handleMouseDown(x, y);
     }
 
     handleMouseMove(x, y) {
-        console.log("Mouse Move at x=" + x + ", y=" + y);
-        for(var i = 0; i < this.objects.length; i++) {
-            this.objects[i].handleMouseMove(x, y);
-        }
+        this.players[this.playerTurn].setMousePos(x, y);
     }
 
     handleMouseUp(x, y) {
-        console.log("Mouse Up at x=" + x + ", y=" + y);
-        for(var i = 0; i < this.objects.length; i++) {
-            this.objects[i].handleMouseUp(x, y);
+        for(var i = 0; i < this.players.length; i++) {
+            this.players[i].handleMouseUp(x, y);
         }
     }
 };

@@ -2,32 +2,48 @@ class Player {
     constructor(xPos, yPos, boxSize, color) {
         this.xPos = xPos;
         this.yPos = yPos;
-        this.boxSize = boxSize * 2;
+        this.boxSize = boxSize * 2; //TODO: clean up
         this.color = color;
         this.pieces = this.createPieces();
+        this.selectedPiece = null;
+        this.selectedPieceIndex = null;
     }
 
     createPieces() {
+        var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
+        var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
+
         var pieces_lcl = [];
+        var i = 0
+        var pieceGridSize = 5;
         for(var key in piece_data) {
-            var piece = new Piece(piece_data[key]);
+            var piece = new Piece(key, piece_data[key]);
+            piece.setBoxSize(this.boxSize);
+
+            var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
+            var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
+
+            piece.setPosition(curPosX, curPosY);
+            piece.setColor(this.color);
             pieces_lcl.push(piece);
+            
+            i += 1;
         }
         return pieces_lcl;
     }
 
-    numPieces() {
+    get numPieces() {
         return this.pieces.length;
     }
 
-    drawPieces(ctx) {
-        var pieceGridSize = 5
+    setMousePos(x, y) {
+        if(this.selectedPieceIndex) {
+            this.pieces[this.selectedPieceIndex].setPosition(x, y);
+        }
+    }
 
-        for(var i = 0; i < this.numPieces(); i++) {
-            var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
-            var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
-            this.pieces[i].setBoxSize(this.boxSize);
-            this.pieces[i].setPosition(curPosX, curPosY);
+    drawPiecesForFrame(ctx) {
+        for(var i = 0; i < this.numPieces; i++) {
             this.pieces[i].draw(ctx, this.color);
         }
     }
@@ -35,17 +51,19 @@ class Player {
     handleMouseDown(x, y) {
         for(var i = 0; i < this.pieces.length; i++) {
             if(this.pieces[i].contains(x, y)) {
-                console.log("Selected piece " + i + ": ");
-                console.log(this.pieces[i]);
+                this.selectedPieceIndex = i;
+                this.pieces[i].setBoxSize(100);
             }
         }
     }
 
     handleMouseMove(x, y) {
-        console.log("handleMouseMove in Player: x=" + x + ", y=" + y);
+        if(this.selectedPiece) {
+            console.log( "moving selected piece: " + this.selectedPiece.name );
+        }
     }
 
     handleMouseUp(x, y) {
-        console.log("handleMouseUp in Player: x=" + x + ", y=" + y);
+        this.selectedPieceIndex = null;
     }
 }
