@@ -1,6 +1,7 @@
 # blokus
 TODO:
 * turn based play
+* undo
 * ability to rotate pieces
 * enforce rules for placing pieces (must touch same color pieces at corners only, no overlapping)
 * scoreboard
