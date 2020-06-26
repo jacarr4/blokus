@@ -32,16 +32,25 @@ class Piece {
         return this.fillStyle;
     }
 
-    // this represents the position of the center tile's top left corner
-    // TODO: make it true center
-    setPosition(xPos, yPos) {
+    setCenterPosition(xPos, yPos) {
+        this.xPos = xPos - this.boxSize / 2;
+        this.yPos = yPos - this.boxSize / 2;
+
+        this.xCenterPos = xPos;
+        this.yCenterPos = yPos;
+    }
+
+    setStartPosition(xPos, yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
+
+        this.xCenterPos = xPos + this.boxSize / 2;
+        this.yCenterPos = yPos + this.boxSize / 2;
     }
 
     resetPiece(x, y) {
-        this.setPosition(x, y);
         this.setBoxSize(40);
+        this.setStartPosition(x, y);
     }
 
     setColor(fillStyle) {
@@ -49,23 +58,42 @@ class Piece {
     }
 
     contains(x, y) {
-        return Math.abs(x - this.xPos) < this.boxSize/2 && Math.abs(y - this.yPos) < this.boxSize/2;
+        return Math.abs(x - this.xCenterPos) < this.boxSize/2 && Math.abs(y - this.yCenterPos) < this.boxSize/2;
     }
+
+    // draw(ctx) {
+    //     ctx.fillStyle = this.fillStyle;
+    //     var pieceSize = 5;
+
+    //     for(var i = 0; i < pieceSize; i++) {
+    //         for(var j = 0; j < pieceSize; j++) {
+    //             var xPosNew = this.xPos + (i * this.boxSize / pieceSize);
+    //             var yPosNew = this.yPos + (j * this.boxSize / pieceSize);
+    //             if(this._data[j][i]) {
+    //                 ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
+    //                 ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
+    //             }
+    //             // ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
+    //         }
+    //     }
+    // }
 
     drawCenter(ctx) {
         ctx.fillStyle = this.fillStyle;
         var pieceSize = 5;
 
+        var xStartPos = this.xCenterPos - this.boxSize / 2;
+        var yStartPos = this.yCenterPos - this.boxSize / 2;
+
         for(var i = 0; i < pieceSize; i++) {
             for(var j = 0; j < pieceSize; j++) {
-                var iAdj = i - Math.floor(pieceSize/2);
-                var jAdj = j - Math.floor(pieceSize/2);
-                var xPosNew = this.xPos + (iAdj * this.boxSize / pieceSize);
-                var yPosNew = this.yPos + (jAdj * this.boxSize / pieceSize);
+                var xPosNew = xStartPos + (i * this.boxSize / pieceSize);
+                var yPosNew = yStartPos + (j * this.boxSize / pieceSize);
                 if(this._data[j][i]) {
                     ctx.fillRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                     ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
                 }
+                // ctx.strokeRect(xPosNew, yPosNew, this.boxSize/pieceSize, this.boxSize/pieceSize);
             }
         }
     }
@@ -89,6 +117,15 @@ class Piece {
         }
         newData[2][2] = this._data[2][2];
         this._data = newData;
+    }
+
+    hover() {
+        // this.setStartPosition(this.xPos - this.boxSize / 2, this.yPos - this.boxSize / 2);
+        this.setBoxSize(50);
+    }
+
+    unhover() {
+        this.setBoxSize(40);
     }
 }
 
@@ -210,10 +247,10 @@ piece_data = {
     ],
     "I4": [
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0],
-        [0, 0, 0, 1, 0],
-        [0, 0, 0, 1, 0],
-        [0, 0, 0, 1, 0]
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0]
     ],
 
     // pieces of size 3

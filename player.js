@@ -22,7 +22,7 @@ class Player {
             var curPosX = this.xPos + (i % pieceGridSize) * this.boxSize;
             var curPosY = this.yPos + Math.floor(i / pieceGridSize) * this.boxSize;
 
-            piece.setPosition(curPosX, curPosY);
+            piece.setStartPosition(curPosX, curPosY);
             piece.setColor(this.color);
             pieces_lcl.push(piece);
             
@@ -38,18 +38,18 @@ class Player {
     setMousePos(x, y) {
         if(this.hoveredPieceIndex != null) {
             if(this.selectedPieceIndex == null) {
-                this.pieces[this.hoveredPieceIndex].setBoxSize(40);
+                this.pieces[this.hoveredPieceIndex].unhover();
             }
             this.hoveredPieceIndex = null;
         }
 
         if(this.selectedPieceIndex != null) {
-            this.pieces[this.selectedPieceIndex].setPosition(x, y);
+            this.pieces[this.selectedPieceIndex].setCenterPosition(x, y);
         } else {
             for(var i = 0; i < this.pieces.length; i++) {
                 if(this.pieces[i].contains(x, y)) {
                     this.hoveredPieceIndex = i;
-                    this.pieces[this.hoveredPieceIndex].setBoxSize(50);
+                    this.pieces[this.hoveredPieceIndex].hover();
                 }
             }
         }

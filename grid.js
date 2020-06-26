@@ -2,11 +2,20 @@ class Grid {
     constructor(canvasWidth, canvasHeight, gridSize, boxSize) {
         this.gridSize = gridSize;
         this.boxSize = boxSize;
-        this.startPosX = (canvasWidth - gridSize * boxSize) / 2;
-        this.startPosY = (canvasHeight - gridSize * boxSize) / 2;
+        this.startPosX = Math.floor((canvasWidth - gridSize * boxSize) / 2);
+        this.startPosY = Math.floor((canvasHeight - gridSize * boxSize) / 2);
         this.pieces = [];
         this.piecesX = [];
         this.piecesY = [];
+        console.log("grid start pos: x=" + this.startPosX + ", y=" + this.startPosY);
+    }
+
+    get xStart() {
+        return this.startPosX;
+    }
+
+    get yStart() {
+        return this.startPosY;
     }
 
     contains(x, y) {
