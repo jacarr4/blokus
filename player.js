@@ -79,6 +79,12 @@ class Player {
         }
     }
 
+    flipSelectedPiece() {
+        if(this.selectedPieceIndex != null) {
+            this.pieces[this.selectedPieceIndex].flip();
+        }
+    }
+
     deselectPiece(x, y) {
         if(this.selectedPieceIndex != null) {
             this.pieces[this.selectedPieceIndex].resetPiece(this.selectedPieceX, this.selectedPieceY);

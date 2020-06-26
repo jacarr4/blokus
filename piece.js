@@ -115,7 +115,25 @@ class Piece {
                 newData[j][pieceSize - 1 - i] = this._data[i][j];
             }
         }
-        newData[2][2] = this._data[2][2];
+        newData[2][2] = this._data[2][2]; // needed when matrix rotation is not performed in-place
+        this._data = newData;
+    }
+
+    flip() {
+        var pieceSize = 5;
+        var newData = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ];
+        for(var i = 0; i < pieceSize; i++) {
+            for(var j = 0; j < pieceSize; j++) {
+                newData[j][i] = this._data[i][j];
+            }
+        }
+
         this._data = newData;
     }
 
