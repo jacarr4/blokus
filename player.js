@@ -68,6 +68,7 @@ class Player {
                 this.selectedPieceY = this.pieces[i].y;
                 this.selectedPieceIndex = i;
                 this.pieces[this.selectedPieceIndex].setBoxSize(100);
+                this.pieces[this.selectedPieceIndex].setCenterPosition(x, y);
             }
         }
         return this.pieces[this.selectedPieceIndex];

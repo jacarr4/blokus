@@ -24,6 +24,48 @@ class Grid {
         return xInBounds && yInBounds;
     }
 
+    pieceIsInBounds(piece, xGridPos, yGridPos) {
+        var leftmostVal = 4;
+        var rightMostVal = 0;
+        var uppermostVal = 4;
+        var lowermostVal = 0;
+        for(var i = 0; i < 5; i++) {
+            for(var j = 0; j < 5; j++) {
+                if(piece.data[j][i] == 1) {
+                    if(i < leftmostVal) {
+                        leftmostVal = i;
+                    }
+                    if(i > rightMostVal) {
+                        rightMostVal = i;
+                    }
+                    if(j < uppermostVal) {
+                        uppermostVal = j;
+                    }
+                    if(j > lowermostVal) {
+                        lowermostVal = j;
+                    }
+                }
+            }
+        }
+
+        var leftBound = xGridPos + leftmostVal - 2;
+        var rightBound = xGridPos + rightMostVal - 2;
+        var upperBound = yGridPos + uppermostVal - 2;
+        var lowerBound = yGridPos + lowermostVal - 2;
+
+        var min = 0;
+        var max = this.gridSize
+
+        return leftBound >= min && rightBound < max && upperBound >= min && lowerBound < max;
+    }
+
+    isValidMove(piece, xPos, yPos) {
+        var xGridPos = Math.floor((xPos - this.startPosX) / this.boxSize);
+        var yGridPos = Math.floor((yPos - this.startPosY) / this.boxSize);
+
+        return this.pieceIsInBounds(piece, xGridPos, yGridPos);
+    }
+
     addPiece(piece, xPos, yPos) {
         this.pieces.push(piece);
         var xGridPos = Math.floor((xPos - this.startPosX) / this.boxSize);
