@@ -22,7 +22,11 @@ function init(canvasWidth, canvasHeight) {
         game.handleMouseUp(e.offsetX, e.offsetY, e.button);
     });
 
-    document.addEventListener('contextmenu', e => {
+    canvas.addEventListener('contextmenu', e => {
         e.preventDefault();
     }, false);
+
+    document.addEventListener('keydown', e => {
+        game.handleKeyDown(e.keyCode);
+    });
 }

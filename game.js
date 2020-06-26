@@ -70,4 +70,11 @@ class Game {
             this.selectedPiece = null;
         }
     }
+
+    handleKeyDown(keyCode) {
+        switch(keyCode) {
+            case 49: this.players[this.playerTurn].flipSelectedPiece(); break;
+            case 50: this.players[this.playerTurn].rotateSelectedPiece(); break;
+        }
+    }
 };

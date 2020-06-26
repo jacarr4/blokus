@@ -7,7 +7,6 @@ class Grid {
         this.pieces = [];
         this.piecesX = [];
         this.piecesY = [];
-        console.log("grid start pos: x=" + this.startPosX + ", y=" + this.startPosY);
     }
 
     get xStart() {
@@ -54,7 +53,7 @@ class Grid {
         var lowerBound = yGridPos + lowermostVal - 2;
 
         var min = 0;
-        var max = this.gridSize
+        var max = this.gridSize;
 
         return leftBound >= min && rightBound < max && upperBound >= min && lowerBound < max;
     }
@@ -102,4 +101,4 @@ class Grid {
             }         
         }
     }
-}
+};
