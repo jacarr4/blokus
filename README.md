@@ -10,3 +10,4 @@ TODO:
 * scoreboard
 * communicate with server
   * server holds game state and gets game state updates from clients
+* use ngrok to make local server accessible over the web
