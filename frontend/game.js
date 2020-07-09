@@ -61,6 +61,11 @@ class Game {
                     this.grid.addPiece(this.selectedPiece, x, y);
                     this.players[this.playerTurn].placeSelectedPiece(x, y);
                     this.updatePlayerTurn();
+
+                    const Http = new XMLHttpRequest();
+                    const url = "localhost:5050/api/test_api"
+                    Http.open("GET", url);
+                    Http.send();
                 } else {
                     this.players[this.playerTurn].deselectPiece(x, y);
                 }

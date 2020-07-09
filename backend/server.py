@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 
 class Application:
     def __init__(self, static_folder, webport):
@@ -7,6 +7,12 @@ class Application:
 
     def create_flask_app(self, static_folder):
         app = Flask(__name__, static_folder = static_folder)
+
+        @app.route('/api/create_game', methods = ['GET'])
+        def create_game():
+            print('creating game')
+            print(request)
+            return jsonify('creating game')
 
         @app.route('/')
         @app.route('/<path:path>')
