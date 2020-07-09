@@ -10,11 +10,6 @@ class Game {
         this.player3 = new Player(675, gridStartY, boxSize, 'rgb(0, 200, 0, 0.5)');
         this.player4 = new Player(675, canvasHeight / 2, boxSize, 'rgb(200, 200, 0, 0.5)');
 
-        // this.player1 = new Player(25, 50, boxSize, 'rgb(0, 0, 200, 0.5)');
-        // this.player2 = new Player(25, 250, boxSize, 'rgb(200, 0, 0, 0.5)');
-        // this.player3 = new Player(675, 50, boxSize, 'rgb(0, 200, 0, 0.5)');
-        // this.player4 = new Player(675, 250, boxSize, 'rgb(200, 200, 0, 0.5)');
-
         this.players = [this.player1, this.player2, this.player3, this.player4];
         this.playerTurn = 0;
 
@@ -61,11 +56,6 @@ class Game {
                     this.grid.addPiece(this.selectedPiece, x, y);
                     this.players[this.playerTurn].placeSelectedPiece(x, y);
                     this.updatePlayerTurn();
-
-                    const Http = new XMLHttpRequest();
-                    const url = "localhost:5050/api/test_api"
-                    Http.open("GET", url);
-                    Http.send();
                 } else {
                     this.players[this.playerTurn].deselectPiece(x, y);
                 }
