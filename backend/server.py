@@ -1,17 +1,7 @@
+from backend.game import Game
+
 from flask import Flask, jsonify, redirect, request, session, url_for
 import os
-
-class Game:
-    def __init__(self, gameId):
-        self._players = set()
-        self._gameId = gameId
-
-    def addPlayer(self, username):
-        if username in self._players:
-            raise ValueError( "Username %s already playing this game." % username )
-        if len(self._players) >= 4:
-            raise ValueError( "Game #%s is full." % self._gameId )
-        self._players.add(username)
 
 class Application:
     def __init__(self, static_folder, webport):
@@ -57,6 +47,7 @@ class Application:
                     
                     if retMsg:
                         return "Error: %s" % retMsg
+                    session['gameId'] = gameId
                 except Exception as e:
                     return "Error: %s" % str( e )
 
@@ -68,9 +59,11 @@ class Application:
         def play():
             return app.send_static_file('play.html')
         
-        @app.route('/api/update_game_state', methods = ['POST'])
+        @app.route('/api/update_game_state', methods = ['GET', 'POST'])
         def update_game_state():
-            return jsonify('updating game state')
+            msg = "Player %s updating game state for game %s" % (session['username'], session['gameId'])
+            print(msg)
+            return msg
         
         @app.route('/api/check_game_state', methods = ['GET'])
         def check_game_state():
