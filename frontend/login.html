@@ -1,7 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <form method="post">
-        <p><input type=text name=username>
-        <p><input type=submit value=Login>
-    </form>
+    <div class="container">
+        <!-- <div style="margin: 0 auto; text-align: center"> -->
+        <div class="element">
+            <h1>Enter a nickname:</h1>
+            <form method="post">
+                <p><input type=text name=username>
+                <p><input type=submit value=Login>
+            </form>
+        </div>
+    </div>
 </html>
+
+<style>
+.container{
+    position: relative;
+    width: 90vw;
+    height: 90vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.element{
+    flex: 1;
+    text-align: center;
+}
+</style>
