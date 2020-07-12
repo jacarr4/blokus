@@ -1,0 +1,13 @@
+.container{
+    position: relative;
+    width: 90vw;
+    height: 90vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.element{
+    flex: 1;
+    text-align: center;
+}
