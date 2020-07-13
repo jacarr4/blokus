@@ -5,7 +5,7 @@ function createGame() {
             console.log(Http.responseText);
         }
     }
-    const url = "/api/create_game"
+    const url = "/api/create_game";
     Http.open("GET", url);
     Http.send();
 }
