@@ -61,9 +61,9 @@ class Application:
         
         @app.route('/api/update_game_state', methods = ['GET', 'POST'])
         def update_game_state():
-            msg = "Player %s updating game state for game %s" % (session['username'], session['gameId'])
+            msg = "Player %s updating game state for game %s using params %s" % (session['username'], session['gameId'], request.json)
             print(msg)
-            return msg
+            return jsonify(msg)
         
         @app.route('/api/check_game_state', methods = ['GET'])
         def check_game_state():

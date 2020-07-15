@@ -1,3 +1,21 @@
+async function postData(url = '', data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}
+
 class Game {
     constructor(canvasWidth, canvasHeight, gridSize, boxSize, numPlayers) {
         this.grid = new Grid(canvasWidth, canvasHeight, gridSize, boxSize);
@@ -55,6 +73,7 @@ class Game {
                 if(this.grid.isValidMove(this.selectedPiece, x, y)) {
                     this.grid.addPiece(this.selectedPiece, x, y);
                     this.players[this.playerTurn].placeSelectedPiece(x, y);
+                    this.updateGameState(x, y, this.playerTurn, this.selectedPiece);
                     this.updatePlayerTurn();
                 } else {
                     this.players[this.playerTurn].deselectPiece(x, y);
@@ -71,5 +90,21 @@ class Game {
             case 49: this.players[this.playerTurn].flipSelectedPiece(); break;
             case 50: this.players[this.playerTurn].rotateSelectedPiece(); break;
         }
+    }
+
+    updateGameState(x, y, playerTurn, selectedPiece) {
+        const url = "/api/update_game_state";
+        postData(url, {x: x, y: y, player: playerTurn, piece: selectedPiece}).then(data => {
+            console.log(data);
+        });
+        // const Http = new XMLHttpRequest();
+        // Http.onreadystatechange = function() {
+        //     if(Http.readyState == 4 && Http.status == 200) {
+        //         console.log(Http.responseText);
+        //     }
+        // }
+        // const url = "/api/update_game_state";
+        // Http.open("GET", url);
+        // Http.send();
     }
 };
