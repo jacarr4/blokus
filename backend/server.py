@@ -19,6 +19,7 @@ class Application:
         self._games.append(Game(gameId))
         self._games[gameId].addPlayer(username)
         self._gameCount += 1
+        return ''
 
     def create_flask_app(self, static_folder):
         app = Flask(__name__, static_folder = static_folder)
