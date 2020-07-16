@@ -58,9 +58,19 @@ class Grid {
         return leftBound >= min && rightBound < max && upperBound >= min && lowerBound < max;
     }
 
+    xGridPos(xPos) {
+        return Math.floor((xPos - this.startPosX) / this.boxSize);
+    }
+
+    yGridPos(yPos) {
+        return Math.floor((yPos - this.startPosY) / this.boxSize);
+    }
+
     isValidMove(piece, xPos, yPos) {
-        var xGridPos = Math.floor((xPos - this.startPosX) / this.boxSize);
-        var yGridPos = Math.floor((yPos - this.startPosY) / this.boxSize);
+        // var xGridPos = Math.floor((xPos - this.startPosX) / this.boxSize);
+        // var yGridPos = Math.floor((yPos - this.startPosY) / this.boxSize);
+        var xGridPos = this.xGridPos(xPos);
+        var yGridPos = this.yGridPos(yPos);
 
         return this.pieceIsInBounds(piece, xGridPos, yGridPos);
     }

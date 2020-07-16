@@ -61,9 +61,17 @@ class Application:
         
         @app.route('/api/update_game_state', methods = ['GET', 'POST'])
         def update_game_state():
-            msg = "Player %s updating game state for game %s using params %s" % (session['username'], session['gameId'], request.json)
-            print(msg)
-            return jsonify(msg)
+            # get properties of state change
+            name = session['username']
+            gameId = session['gameId']
+            position = (request.json['x'], request.json['y'])
+            player = request.json['player']
+            piece = request.json['piece']
+
+            # apply state to the user's game
+            self._games[gameId].placePiece(player, piece, position)
+
+            return jsonify([])
         
         @app.route('/api/check_game_state', methods = ['GET'])
         def check_game_state():
@@ -81,6 +89,13 @@ class Application:
                 return redirect(url_for('login'))
         
         return app
+
+        @app.after_request
+        def after_request(response):
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            return response
     
     def run(self):
         self._app.run(port = webport)

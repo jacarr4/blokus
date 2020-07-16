@@ -73,7 +73,8 @@ class Game {
                 if(this.grid.isValidMove(this.selectedPiece, x, y)) {
                     this.grid.addPiece(this.selectedPiece, x, y);
                     this.players[this.playerTurn].placeSelectedPiece(x, y);
-                    this.updateGameState(x, y, this.playerTurn, this.selectedPiece);
+                    // this.updateGameState(x, y, this.playerTurn, this.selectedPiece);
+                    this.updateGameState(this.grid.xGridPos(x), this.grid.yGridPos(y), this.playerTurn, this.selectedPiece);
                     this.updatePlayerTurn();
                 } else {
                     this.players[this.playerTurn].deselectPiece(x, y);
