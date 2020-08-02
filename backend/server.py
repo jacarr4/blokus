@@ -49,12 +49,17 @@ class Application:
                     if retMsg:
                         return "Error: %s" % retMsg
                     session['gameId'] = gameId
+                    session['player'] = self._games[gameId].numPlayers()
                 except Exception as e:
                     return "Error: %s" % str( e )
 
                 print('adding player %s to game %s' % (session['username'], gameId))
                 return redirect(url_for('play'))
             return app.send_static_file('join.html')
+        
+        @app.route('/api/get_player', methods = ['GET'])
+        def get_player():
+            return jsonify(session['player'])
         
         @app.route('/play', methods = ['GET'])
         def play():

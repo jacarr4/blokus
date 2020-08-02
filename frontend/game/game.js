@@ -30,8 +30,23 @@ class Game {
 
         this.players = [this.player1, this.player2, this.player3, this.player4];
         this.playerTurn = 0;
+        this.getPlayer();
 
         this.selectedPiece = null;
+    }
+
+    // todo: factor this out into a function that takes a url and a callback. it's going to get duplicated a lot 
+    getPlayer() {
+        const Http = new XMLHttpRequest();
+        Http.onreadystatechange = function() {
+            if(Http.readyState == 4 && Http.status == 200) {
+                this.player = Http.responseText;
+                console.log( this.player );
+            }
+        }
+        const url = "/api/get_player";
+        Http.open("GET", url);
+        Http.send();
     }
 
     setCtx(ctx) {

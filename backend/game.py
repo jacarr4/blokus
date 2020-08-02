@@ -2,6 +2,9 @@ class Game:
     def __init__(self, gameId):
         self._players = set()
         self._gameId = gameId
+    
+    def numPlayers(self):
+        return len(self._players) - 1
 
     def addPlayer(self, username):
         if username in self._players:
