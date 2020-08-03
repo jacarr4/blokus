@@ -4,10 +4,19 @@
     height: 90vh;
     margin: auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 .element{
     flex: 1;
+    text-align: center;
+}
+.board{
+    flex: 80;
+    text-align: center;
+}
+.title{
+    flex: 5;
     text-align: center;
 }

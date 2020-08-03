@@ -4,7 +4,7 @@ from flask import Flask, jsonify, redirect, request, session, url_for
 import os
 
 class Application:
-    def __init__(self, static_folder, webport):
+    def __init__(self, static_folder, webport, debug = False):
         self._app = self.create_flask_app(static_folder)
         self._webport = webport
         self._games = []
@@ -49,7 +49,7 @@ class Application:
                     if retMsg:
                         return "Error: %s" % retMsg
                     session['gameId'] = gameId
-                    session['player'] = self._games[gameId].numPlayers()
+                    session['player'] = self._games[gameId].numPlayers() - 1
                 except Exception as e:
                     return "Error: %s" % str( e )
 
@@ -61,8 +61,17 @@ class Application:
         def get_player():
             return jsonify(session['player'])
         
+        @app.route('/api/get_gameid', methods = ['GET'])
+        def get_gameid():
+            return jsonify(session['gameId'])
+        
         @app.route('/play', methods = ['GET'])
         def play():
+            if debug:
+                session['username'] = 'jake'
+                session['gameId'] = 0
+                session['player'] = 1
+                self.createGame( 0, 'jake' )
             return app.send_static_file('play.html')
         
         @app.route('/api/update_game_state', methods = ['GET', 'POST'])
@@ -110,6 +119,11 @@ if __name__ == '__main__':
     static_folder = '../frontend'
     webport = 5050
 
-    application = Application(static_folder, webport)
+    debug = False
+
+    if os.getenv('DEBUG'):
+        debug = True
+
+    application = Application(static_folder, webport, debug)
     
     application.run()

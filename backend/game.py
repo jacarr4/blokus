@@ -4,7 +4,7 @@ class Game:
         self._gameId = gameId
     
     def numPlayers(self):
-        return len(self._players) - 1
+        return len(self._players)
 
     def addPlayer(self, username):
         if username in self._players:

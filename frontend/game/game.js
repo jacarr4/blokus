@@ -16,6 +16,32 @@ async function postData(url = '', data = {}) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
+function getPlayer(game) {
+    const Http = new XMLHttpRequest();
+    Http.onreadystatechange = function() {
+        if(Http.readyState == 4 && Http.status == 200) {
+            game.setPlayer(Http.responseText);
+        }
+    }
+    const url = "/api/get_player";
+    Http.open("GET", url);
+    Http.send();
+}
+
+function getGameId(game) {
+    const Http = new XMLHttpRequest();
+    Http.onreadystatechange = function() {
+        if(Http.readyState == 4 && Http.status == 200) {
+            gameId = Http.responseText;
+            game.setGameId(gameId);
+            document.getElementById("gameIdDialog").innerHTML = "You are in game " + gameId + "!";
+        }
+    }
+    const url = "/api/get_gameid";
+    Http.open("GET", url);
+    Http.send();
+}
+
 class Game {
     constructor(canvasWidth, canvasHeight, gridSize, boxSize, numPlayers) {
         this.grid = new Grid(canvasWidth, canvasHeight, gridSize, boxSize);
@@ -30,23 +56,18 @@ class Game {
 
         this.players = [this.player1, this.player2, this.player3, this.player4];
         this.playerTurn = 0;
-        this.getPlayer();
+        getPlayer(this);
+        getGameId(this);
 
         this.selectedPiece = null;
     }
 
-    // todo: factor this out into a function that takes a url and a callback. it's going to get duplicated a lot 
-    getPlayer() {
-        const Http = new XMLHttpRequest();
-        Http.onreadystatechange = function() {
-            if(Http.readyState == 4 && Http.status == 200) {
-                this.player = Http.responseText;
-                console.log( this.player );
-            }
-        }
-        const url = "/api/get_player";
-        Http.open("GET", url);
-        Http.send();
+    setPlayer(player) {
+        this.player = player;
+    }
+
+    setGameId(gameId) {
+        this.gameId = gameId;
     }
 
     setCtx(ctx) {
@@ -68,6 +89,12 @@ class Game {
 
     updatePlayerTurn() {
         this.playerTurn = (this.playerTurn + 1) % this.numPlayers;
+
+        if(this.playerTurn == this.player) {
+            document.getElementById("yourTurnDialog").innerHTML = "It's your turn!";
+        } else {
+            document.getElementById("yourTurnDialog").innerHTML = "";
+        }
     }
 
     handleMouseDown(x, y, button) {
