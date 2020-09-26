@@ -1,7 +1,10 @@
+from backend.grid import Grid
+
 class Game:
     def __init__(self, gameId):
         self._players = set()
         self._gameId = gameId
+        self._grid = Grid()
     
     def numPlayers(self):
         return len(self._players)
@@ -15,3 +18,4 @@ class Game:
     
     def placePiece(self, player, piece, position):
         print(f"Game {self._gameId}: Player {player} is placing piece {piece} in position {position}")
+        self._grid.placePiece(piece, position)

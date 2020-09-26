@@ -8,6 +8,7 @@ python3 -m venv venv
 # install required packages
 echo "Installing required packages..."
 pip3 install Flask
+pip3 install numpy
 
 # run the server
 echo "Running the server..."
