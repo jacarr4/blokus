@@ -1,5 +1,6 @@
 # blokus
 TODO:
+* figure out how to get game clients to poll for game state
 * box size/piece size refactor
 * piece selection/placement animations
 * undo

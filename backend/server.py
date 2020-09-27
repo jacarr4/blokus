@@ -94,6 +94,14 @@ class Application:
             for gameId in range(len(self._games)):
                 msg += "Game %s has players %s. " % (gameId, str(self._games[gameId].players))
             return jsonify(msg)
+        
+        @app.route('/api/get_game_state', methods = ['GET'])
+        def get_game_state():
+            gameId = session['gameId']
+            game = self._games[gameId]
+            resp = game.getPieces()
+            resp['turn'] = game.getTurn()
+            return jsonify(resp)
 
         @app.route('/')
         @app.route('/<path:path>')
