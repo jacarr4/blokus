@@ -5,7 +5,7 @@ class Grid:
         # self._grid = np.array([np.arange(0,20)]*20,dtype=int)
         self._grid = np.zeros(shape=(20,20), dtype=int)
         print( self._grid )
-    
+
     def placePiece(self, piece_data, position: tuple):
         x = position[0]
         y = position[1]

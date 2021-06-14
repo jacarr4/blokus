@@ -12,7 +12,19 @@
         <link rel="stylesheet" type="text/css" href="game/styles.css">
     </head>
 
-    <div class="container">
+    <div id="loginForm">
+        <p><input type=text name=username id="username"></p>
+        <p><input type=submit value=Login onclick="getUsername()"></p>
+    </div>
+
+    <div id="joinForm">
+        <p><input type=submit value="Create Game" onclick="createGame()"></p>
+        <br>
+        <p><input type=text id="gameId"></p>
+        <p><input type=submit value="Join Game" onclick="joinGame()"></p>
+    </div>
+
+    <div class="container" id="gameContainer">
         <div class="title"></div>
         <div class="title" id="gameIdDialog"></div>
         <div class="title" id="yourTurnDialog"></div>

@@ -7,13 +7,13 @@ class Game:
         self._grid = Grid()
         self._pieces = []
         self._lastTurn = -1
-    
+
     def numPlayers(self):
         return len(self._players)
-    
+
     def getPieces(self):
         return self._pieces
-    
+
     def getTurn(self):
         return (self._lastTurn + 1) % 4
 
@@ -23,7 +23,7 @@ class Game:
         if len(self._players) >= 4:
             raise ValueError( "Game #%s is full." % self._gameId )
         self._players.add(username)
-    
+
     def placePiece(self, player, piece, position):
         print(f"Game {self._gameId}: Player {player} is placing piece {piece} in position {position}")
         self._grid.placePiece(piece['_data'], position)

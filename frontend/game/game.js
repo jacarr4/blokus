@@ -16,31 +16,44 @@ async function postData(url = '', data = {}) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-function getPlayer(game) {
-    const Http = new XMLHttpRequest();
-    Http.onreadystatechange = function() {
-        if(Http.readyState == 4 && Http.status == 200) {
-            game.setPlayer(Http.responseText);
-        }
-    }
-    const url = "/api/get_player";
-    Http.open("GET", url);
-    Http.send();
-}
+// function getPlayer(game) {
+//     const Http = new XMLHttpRequest();
+//     Http.onreadystatechange = function() {
+//         if(Http.readyState == 4 && Http.status == 200) {
+//             game.setPlayer(Http.responseText);
+//         }
+//     }
+//     const url = "/api/get_player";
+//     Http.open("GET", url);
+//     Http.send();
+// }
 
-function getGameId(game) {
-    const Http = new XMLHttpRequest();
-    Http.onreadystatechange = function() {
-        if(Http.readyState == 4 && Http.status == 200) {
-            gameId = Http.responseText;
-            game.setGameId(gameId);
-            document.getElementById("gameIdDialog").innerHTML = "You are in game " + gameId + "!";
-        }
-    }
-    const url = "/api/get_gameid";
-    Http.open("GET", url);
-    Http.send();
-}
+// function getGameId(game) {
+//     const Http = new XMLHttpRequest();
+//     Http.onreadystatechange = function() {
+//         if(Http.readyState == 4 && Http.status == 200) {
+//             gameId = Http.responseText;
+//             game.setGameId(gameId);
+//             document.getElementById("gameIdDialog").innerHTML = "You are in game " + gameId + "!";
+//         }
+//     }
+//     const url = "/api/get_gameid";
+//     Http.open("GET", url);
+//     Http.send();
+// }
+
+// function getUsername(game) {
+//     const Http = new XMLHttpRequest();
+//     Http.onreadystatechange = function() {
+//         if(Http.readyState == 4 && Http.status == 200) {
+//             username = Http.responseText;
+//             game.setUsername(username);
+//         }
+//     }
+//     const url = "/api/get_username";
+//     Http.open("GET", url);
+//     Http.send();
+// }
 
 class Game {
     constructor(canvasWidth, canvasHeight, gridSize, boxSize, numPlayers) {
@@ -56,8 +69,22 @@ class Game {
 
         this.players = [this.player1, this.player2, this.player3, this.player4];
         this.playerTurn = 0;
-        getPlayer(this);
-        getGameId(this);
+        // getPlayer(this);
+        // getGameId(this);
+        // getUsername(this);
+
+        console.log( this.username );
+        console.log( this.gameId );
+
+        // var socket = io();
+        // socket.on('connect', function() {
+        //     socket.emit('my event', {data: 'I\'m connected!'});
+        //     socket.emit('join', { 'username': this.username, 'room': this.gameId });
+        // });
+
+        // socket.on('message', function( message ) {
+        //     console.log( 'got message: ', message );
+        // });
 
         this.selectedPiece = null;
     }
@@ -68,6 +95,10 @@ class Game {
 
     setGameId(gameId) {
         this.gameId = gameId;
+    }
+
+    setUsername( username ) {
+        this.username = username;
     }
 
     setCtx(ctx) {
