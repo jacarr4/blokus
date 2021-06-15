@@ -102,9 +102,10 @@ class Game {
 
     setPlayer(player) {
         this.player = player;
-        if(this.playerTurn == this.player) {
-            document.getElementById("yourTurnDialog").innerHTML = "It's your turn!";
-        }
+        // this.updatePlayerTurnDialog()
+        // if(this.playerTurn == this.player) {
+        //     document.getElementById("yourTurnDialog").innerHTML = "It's your turn!";
+        // }
     }
 
     setPlayerNames( playerNames ) {

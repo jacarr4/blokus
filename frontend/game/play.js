@@ -71,6 +71,7 @@ class GameMeta {
             game.setUsername( username );
             game.setPlayer( player );
             game.setPlayerNames( playerNames );
+            game.updatePlayerTurnDialog();
         });
 
         this.socket.on( 'start', function( message ) {
