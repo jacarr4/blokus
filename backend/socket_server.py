@@ -1,7 +1,7 @@
 from backend.game import Game
 
 from flask import Flask, jsonify, redirect, request, session, url_for
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, send, emit, join_room
 import os
 
 class Application:
@@ -28,14 +28,17 @@ class Application:
         @socketio.on( 'join game' )
         def join_game( params ):
             # print( "joining game: ", msg )
-            gameId = params[ 'gameId' ]
+            gameId = int( params[ 'gameId' ] )
             username = params[ 'username' ]
 
             self._games[ gameId ].addPlayer( username )
 
             session[ 'username' ] = username
             session[ 'gameId' ] = gameId
-            emit( 'joined', f'joined game {gameId} as user {username}' )
+
+            join_room( gameId )
+
+            emit( 'joined', f'{username} has entered room {gameId}', to = gameId )
 
         @socketio.on( 'create game' )
         def create_game( params ):
@@ -51,7 +54,27 @@ class Application:
             # print( 'ADDING PLAY>ER', username)
             session[ 'username' ] = username
             session[ 'gameId' ] = gameId
-            emit( 'joined', f'joined game {gameId} as user {username}' )
+
+            join_room( gameId )
+
+            emit( 'joined', f'{username} has created room {gameId}' )
+
+        @socketio.on( 'update game state' )
+        def update_game_state( params ):
+            # print( "updating game state with params: ", params )
+            # get properties of state change
+            name = session[ 'username' ]
+            gameId = session[ 'gameId' ]
+            # position = (request.json['x'], request.json['y'])
+            position = ( params[ 'x' ], params[ 'y' ] )
+            # player = request.json['player']
+            player = params[ 'player' ]
+            # piece = request.json['piece']
+            piece = params[ 'piece' ]
+
+            # apply state to the user's game
+            self._games[ gameId ].placePiece( player, piece, position )
+            emit( 'game state update', f'updated' )
 
         @app.route( '/' )
         @app.route( '/<path:path>' )

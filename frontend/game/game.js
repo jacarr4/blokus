@@ -56,7 +56,8 @@ async function postData(url = '', data = {}) {
 // }
 
 class Game {
-    constructor(canvasWidth, canvasHeight, gridSize, boxSize, numPlayers) {
+    constructor( socket, canvasWidth, canvasHeight, gridSize, boxSize, numPlayers ) {
+        this.socket = socket;
         this.grid = new Grid(canvasWidth, canvasHeight, gridSize, boxSize);
         this.numPlayers = numPlayers;
         // TODO: clean up these arguments
@@ -166,11 +167,11 @@ class Game {
         }
     }
 
-    updateGameState(x, y, playerTurn, selectedPiece) {
-        const url = "/api/update_game_state";
-        postData(url, {x: x, y: y, player: playerTurn, piece: selectedPiece}).then(data => {
-            console.log(data);
-        });
+    // updateGameState(x, y, playerTurn, selectedPiece) {
+    //     const url = "/api/update_game_state";
+    //     postData(url, {x: x, y: y, player: playerTurn, piece: selectedPiece}).then(data => {
+    //         console.log(data);
+    //     });
         // const Http = new XMLHttpRequest();
         // Http.onreadystatechange = function() {
         //     if(Http.readyState == 4 && Http.status == 200) {
@@ -180,5 +181,9 @@ class Game {
         // const url = "/api/update_game_state";
         // Http.open("GET", url);
         // Http.send();
+    // }
+
+    updateGameState( x, y, playerTurn, selectedPiece ) {
+        this.socket.emit( 'update game state', { x: x, y: y, player: playerTurn, piece: selectedPiece} );
     }
 };

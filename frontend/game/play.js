@@ -49,8 +49,8 @@ class GameMeta {
         var gridSize = 20;
         var boxSize = 20;
         var numPlayers = 4;
-        var game = new Game(this.canvasWidth, this.canvasHeight, gridSize, boxSize, numPlayers);
-        var canvas = document.getElementById('mainCanvas');
+        var game = new Game( this.socket, this.canvasWidth, this.canvasHeight, gridSize, boxSize, numPlayers );
+        var canvas = document.getElementById( 'mainCanvas' );
         if(canvas.getContext) {
             var ctx = canvas.getContext('2d');
             game.setCtx(ctx);
@@ -78,6 +78,10 @@ class GameMeta {
         });
 
         this.socket.on( 'joined', function( message ) {
+            console.log( message );
+        });
+
+        this.socket.on( 'game state update', function( message ) {
             console.log( message );
         });
     }
