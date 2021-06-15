@@ -66,9 +66,17 @@ class GameMeta {
             var gameId = message[ 'gameId' ];
             var username = message[ 'username' ];
             var player = message[ 'player' ];
+            var playerNames = message[ 'playerNames' ];
             game.setGameId( gameId );
             game.setUsername( username );
             game.setPlayer( player );
+            game.setPlayerNames( playerNames );
+        });
+
+        this.socket.on( 'start', function( message ) {
+            var playerNames = message[ 'playerNames' ];
+            console.log( playerNames );
+            game.setPlayerNames( playerNames );
         });
 
         this.socket.on( 'game state update', function( message ) {

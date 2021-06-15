@@ -39,7 +39,15 @@ class Application:
 
             player = self._games[ gameId ].numPlayers() - 1
 
-            emit( 'joined', { 'username': username, 'player': player, 'gameId': gameId } )
+            data = { 'username'    : username,
+                     'player'      : player,
+                     'gameId'      : gameId,
+                     'playerNames' : self._games[ gameId ].getPlayers() }
+
+            emit( 'joined', data )
+
+            if self._games[ gameId ].numPlayers() == 4:
+                emit( 'start', { 'playerNames': self._games[ gameId ].getPlayers() }, to = str( gameId ) )
 
         @socketio.on( 'create game' )
         def create_game( params ):

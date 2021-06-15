@@ -90,11 +90,25 @@ class Game {
         this.selectedPiece = null;
     }
 
+    updatePlayerTurnDialog() {
+        if( this.playerTurn == this.player ) {
+            var turnMessage = "It's your turn!";
+        } else {
+            var turnMessage = "It's " + this.playerNames[ this.playerTurn ] + "'s turn.";
+        }
+
+        document.getElementById( "yourTurnDialog" ).innerHTML = turnMessage;
+    }
+
     setPlayer(player) {
         this.player = player;
         if(this.playerTurn == this.player) {
             document.getElementById("yourTurnDialog").innerHTML = "It's your turn!";
         }
+    }
+
+    setPlayerNames( playerNames ) {
+        this.playerNames = playerNames
     }
 
     setGameId(gameId) {
@@ -125,11 +139,7 @@ class Game {
     updatePlayerTurn() {
         this.playerTurn = (this.playerTurn + 1) % this.numPlayers;
 
-        if(this.playerTurn == this.player) {
-            document.getElementById("yourTurnDialog").innerHTML = "It's your turn!";
-        } else {
-            document.getElementById("yourTurnDialog").innerHTML = "";
-        }
+        this.updatePlayerTurnDialog();
     }
 
     handleMouseDown(x, y, button) {
