@@ -75,12 +75,18 @@ class Grid {
         return this.pieceIsInBounds(piece, xGridPos, yGridPos);
     }
 
-    addPiece(piece, xPos, yPos) {
-        this.pieces.push(piece);
-        var xGridPos = Math.floor((xPos - this.startPosX) / this.boxSize);
-        var yGridPos = Math.floor((yPos - this.startPosY) / this.boxSize);
-        this.piecesX.push(xGridPos);
-        this.piecesY.push(yGridPos);
+    // addPiece(piece, xPos, yPos) {
+    //     this.pieces.push(piece);
+    //     var xGridPos = Math.floor((xPos - this.startPosX) / this.boxSize);
+    //     var yGridPos = Math.floor((yPos - this.startPosY) / this.boxSize);
+    //     this.piecesX.push(xGridPos);
+    //     this.piecesY.push(yGridPos);
+    // }
+
+    addPiece( piece, xGridPos, yGridPos ) {
+        this.pieces.push( piece );
+        this.piecesX.push( xGridPos );
+        this.piecesY.push( yGridPos );
     }
 
     draw(ctx) {

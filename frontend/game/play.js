@@ -78,7 +78,13 @@ class GameMeta {
         });
 
         this.socket.on( 'joined', function( message ) {
-            console.log( message );
+            var gameId = message[ 'gameId' ];
+            var username = message[ 'username' ];
+            var player = message[ 'player' ];
+            game.setGameId( gameId );
+            game.setUsername( username );
+            game.setPlayer( player );
+            // console.log( message );
         });
 
         this.socket.on( 'game state update', function( message ) {

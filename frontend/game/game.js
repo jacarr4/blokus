@@ -74,8 +74,8 @@ class Game {
         // getGameId(this);
         // getUsername(this);
 
-        console.log( this.username );
-        console.log( this.gameId );
+        // console.log( this.username );
+        // console.log( this.gameId );
 
         // var socket = io();
         // socket.on('connect', function() {
@@ -92,6 +92,9 @@ class Game {
 
     setPlayer(player) {
         this.player = player;
+        if(this.playerTurn == this.player) {
+            document.getElementById("yourTurnDialog").innerHTML = "It's your turn!";
+        }
     }
 
     setGameId(gameId) {
@@ -130,6 +133,11 @@ class Game {
     }
 
     handleMouseDown(x, y, button) {
+        // you can only move pieces if it's your turn
+        if( this.playerTurn != this.player ) {
+            return;
+        }
+
         if(button == 0) {
             this.selectedPiece = this.players[this.playerTurn].selectPiece(x, y);
         } else if( button == 2 ) {
@@ -143,6 +151,8 @@ class Game {
 
     applyGameStateUpdate( x, y, piece, player ) {
         this.grid.addPiece( piece, x, y );
+        this.updatePlayerTurn();
+        // this.playerTurn = ( player+1 ) % 4
         // this.players[ player ].placeSelectedPiece( x, y )
     }
 
@@ -154,7 +164,7 @@ class Game {
                     this.players[this.playerTurn].placeSelectedPiece(x, y);
                     // this.updateGameState(x, y, this.playerTurn, this.selectedPiece);
                     this.updateGameState(this.grid.xGridPos(x), this.grid.yGridPos(y), this.playerTurn, this.selectedPiece);
-                    this.updatePlayerTurn();
+                    // this.updatePlayerTurn();
                 } else {
                     this.players[this.playerTurn].deselectPiece(x, y);
                 }

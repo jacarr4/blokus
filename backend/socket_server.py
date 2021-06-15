@@ -36,9 +36,13 @@ class Application:
             session[ 'username' ] = username
             session[ 'gameId' ] = gameId
 
-            join_room( gameId )
+            join_room( str( gameId ) )
 
-            emit( 'joined', f'{username} has entered room {gameId}', to = gameId )
+            player = self._games[ gameId ].numPlayers() - 1
+
+            emit( 'joined', { 'username': username, 'player': player, 'gameId': gameId } )
+
+            # emit( 'joined', f'{username} has entered room {gameId} as player {player}', to = str( gameId ) )
 
         @socketio.on( 'create game' )
         def create_game( params ):
@@ -55,9 +59,11 @@ class Application:
             session[ 'username' ] = username
             session[ 'gameId' ] = gameId
 
-            join_room( gameId )
+            join_room( str( gameId ) )
 
-            emit( 'joined', f'{username} has created room {gameId}' )
+            emit( 'joined', { 'username': username, 'player': 0, 'gameId': gameId } )
+
+            # emit( 'joined', f'{username} has created room {gameId} as player 1' )
 
         @socketio.on( 'update game state' )
         def update_game_state( params ):
@@ -74,7 +80,7 @@ class Application:
 
             # apply state to the user's game
             self._games[ gameId ].placePiece( player, piece, position )
-            emit( 'game state update', { 'player': player, 'piece': piece, 'position': position }, to = gameId )
+            emit( 'game state update', { 'player': player, 'piece': piece, 'position': position }, to = str( gameId ) )
 
         @app.route( '/' )
         @app.route( '/<path:path>' )
