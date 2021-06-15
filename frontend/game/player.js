@@ -25,7 +25,7 @@ class Player {
             piece.setStartPosition(curPosX, curPosY);
             piece.setColor(this.color);
             pieces_lcl.push(piece);
-            
+
             i += 1;
         }
         return pieces_lcl;

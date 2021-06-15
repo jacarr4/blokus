@@ -82,7 +82,17 @@ class GameMeta {
         });
 
         this.socket.on( 'game state update', function( message ) {
-            console.log( message );
+            console.log( message )
+            // console.log( 'game state update: ' + message );
+            var x = message[ 'position' ][ 0 ]
+            var y = message[ 'position' ][ 1 ]
+            var piece = message[ 'piece' ]
+            var player = message[ 'player' ]
+            console.log( 'x: ' + x );
+            console.log( 'y: ' + y);
+            console.log( 'piece: ' + piece );
+            console.log( 'player: ' + player );
+            game.applyGameStateUpdate( x, y, piece, player );
         });
     }
 }

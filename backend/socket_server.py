@@ -74,7 +74,7 @@ class Application:
 
             # apply state to the user's game
             self._games[ gameId ].placePiece( player, piece, position )
-            emit( 'game state update', f'updated' )
+            emit( 'game state update', { 'player': player, 'piece': piece, 'position': position }, to = gameId )
 
         @app.route( '/' )
         @app.route( '/<path:path>' )

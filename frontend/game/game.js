@@ -141,11 +141,16 @@ class Game {
         this.players[this.playerTurn].setMousePos(x, y);
     }
 
+    applyGameStateUpdate( x, y, piece, player ) {
+        this.grid.addPiece( piece, x, y );
+        // this.players[ player ].placeSelectedPiece( x, y )
+    }
+
     handleMouseUp(x, y, button) {
         if(button == 0) {
             if(this.selectedPiece && this.grid.contains(x, y)) {
                 if(this.grid.isValidMove(this.selectedPiece, x, y)) {
-                    this.grid.addPiece(this.selectedPiece, x, y);
+                    // this.grid.addPiece(this.selectedPiece, x, y);
                     this.players[this.playerTurn].placeSelectedPiece(x, y);
                     // this.updateGameState(x, y, this.playerTurn, this.selectedPiece);
                     this.updateGameState(this.grid.xGridPos(x), this.grid.yGridPos(y), this.playerTurn, this.selectedPiece);

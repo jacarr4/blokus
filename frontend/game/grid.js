@@ -101,14 +101,14 @@ class Grid {
             ctx.fillStyle = this.pieces[k].fillStyle;
             for(var i = 0; i < pieceSize; i++) {
                 for(var j = 0; j < pieceSize; j++) {
-                    if(this.pieces[k].data[j][i]) {
+                    if(this.pieces[k]._data[j][i]) {
                         var xPos = this.startPosX + this.boxSize * (this.piecesX[k] - 2 + i);
                         var yPos = this.startPosY + this.boxSize * (this.piecesY[k] - 2 + j);
                         ctx.fillRect(xPos, yPos, this.boxSize, this.boxSize); // draw the piece
                         ctx.strokeRect(xPos, yPos, this.boxSize, this.boxSize); // redraw the border so it's dark
                     }
                 }
-            }         
+            }
         }
     }
 };
