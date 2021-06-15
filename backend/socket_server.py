@@ -88,11 +88,11 @@ class Application:
         return app, socketio
 
     def run( self ):
-        self._socketio.run( self._app, port = webport )
+        self._socketio.run( self._app, host = '0.0.0.0', port = webport )
 
 if __name__ == '__main__':
     static_folder = '../frontend'
-    webport = 5050
+    webport = 80
 
     debug = False
 
