@@ -27,7 +27,6 @@ class Application:
 
         @socketio.on( 'join game' )
         def join_game( params ):
-            # print( "joining game: ", msg )
             gameId = int( params[ 'gameId' ] )
             username = params[ 'username' ]
 
@@ -42,20 +41,15 @@ class Application:
 
             emit( 'joined', { 'username': username, 'player': player, 'gameId': gameId } )
 
-            # emit( 'joined', f'{username} has entered room {gameId} as player {player}', to = str( gameId ) )
-
         @socketio.on( 'create game' )
         def create_game( params ):
             print( "creating game: ", params )
-            # gameId = int( params[ 'gameId' ] )
             gameId = len( self._games )
             username = params[ 'username' ]
 
             self._games.append( Game( gameId ) )
             self._games[ gameId ].addPlayer( username )
-            # self._gameCount += 1
 
-            # print( 'ADDING PLAY>ER', username)
             session[ 'username' ] = username
             session[ 'gameId' ] = gameId
 
@@ -63,19 +57,13 @@ class Application:
 
             emit( 'joined', { 'username': username, 'player': 0, 'gameId': gameId } )
 
-            # emit( 'joined', f'{username} has created room {gameId} as player 1' )
-
         @socketio.on( 'update game state' )
         def update_game_state( params ):
-            # print( "updating game state with params: ", params )
             # get properties of state change
             name = session[ 'username' ]
             gameId = session[ 'gameId' ]
-            # position = (request.json['x'], request.json['y'])
             position = ( params[ 'x' ], params[ 'y' ] )
-            # player = request.json['player']
             player = params[ 'player' ]
-            # piece = request.json['piece']
             piece = params[ 'piece' ]
 
             # apply state to the user's game

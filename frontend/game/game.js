@@ -152,8 +152,6 @@ class Game {
     applyGameStateUpdate( x, y, piece, player ) {
         this.grid.addPiece( piece, x, y );
         this.updatePlayerTurn();
-        // this.playerTurn = ( player+1 ) % 4
-        // this.players[ player ].placeSelectedPiece( x, y )
     }
 
     handleMouseUp(x, y, button) {
@@ -175,28 +173,12 @@ class Game {
         }
     }
 
-    handleKeyDown(keyCode) {
-        switch(keyCode) {
-            case 49: this.players[this.playerTurn].flipSelectedPiece(); break;
-            case 50: this.players[this.playerTurn].rotateSelectedPiece(); break;
+    handleKeyDown( keyCode ) {
+        switch( keyCode ) {
+            case 49: this.players[ this.playerTurn ].flipSelectedPiece(); break;
+            case 50: this.players[ this.playerTurn ].rotateSelectedPiece(); break;
         }
     }
-
-    // updateGameState(x, y, playerTurn, selectedPiece) {
-    //     const url = "/api/update_game_state";
-    //     postData(url, {x: x, y: y, player: playerTurn, piece: selectedPiece}).then(data => {
-    //         console.log(data);
-    //     });
-        // const Http = new XMLHttpRequest();
-        // Http.onreadystatechange = function() {
-        //     if(Http.readyState == 4 && Http.status == 200) {
-        //         console.log(Http.responseText);
-        //     }
-        // }
-        // const url = "/api/update_game_state";
-        // Http.open("GET", url);
-        // Http.send();
-    // }
 
     updateGameState( x, y, playerTurn, selectedPiece ) {
         this.socket.emit( 'update game state', { x: x, y: y, player: playerTurn, piece: selectedPiece} );
