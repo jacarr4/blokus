@@ -7,8 +7,10 @@ class GameMeta {
     hideGame()      { document.getElementById( "gameContainer" ).style.visibility = "hidden";  }
     showLoginForm() { document.getElementById( "loginForm" ).style.visibility     = "visible"; }
     hideLoginForm() { document.getElementById( "loginForm" ).style.visibility     = "hidden";  }
+    removeLoginForm() { document.getElementById( "loginForm" ).remove(); }
     showJoinForm()  { document.getElementById( "joinForm" ).style.visibility      = "visible"; }
     hideJoinForm()  { document.getElementById( "joinForm" ).style.visibility      = "hidden";  }
+    removeJoinForm() { document.getElementById( "joinForm" ).remove(); }
 
     setUsername( username ) { this.username = username; }
     getUsername() { return this.username; }
@@ -28,7 +30,7 @@ class GameMeta {
     }
 
     start() {
-        this.hideJoinForm();
+        this.removeJoinForm();
         this.showGame();
 
         var gridSize = 20;
@@ -103,7 +105,7 @@ function init(canvasWidth, canvasHeight) {
 function getUsername() {
     var username = document.getElementById( "username" ).value;
     gameMeta.setUsername( username );
-    gameMeta.hideLoginForm();
+    gameMeta.removeLoginForm();
     gameMeta.showJoinForm();
 }
 
