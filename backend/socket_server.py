@@ -10,6 +10,7 @@ class Application:
         self._webport = webport
         self._games = []
         self._gameCount = 0
+        self._numClients = 0
 
     def create_flask_app( self, static_folder ):
         app = Flask( __name__, static_folder = static_folder )
@@ -18,12 +19,13 @@ class Application:
 
         @socketio.on( 'connect' )
         def on_connect( msg ):
-            print( msg )
-            send( 'hello' )
+            print( f'Client {self._numClients} connected' )
+            self._numClients += 1
+            # send( 'hello' )
 
-        @socketio.on( 'connected' )
-        def on_my_event( msg ):
-            print( "connected:", msg )
+        # @socketio.on( 'connected' )
+        # def on_my_event( msg ):
+        #     print( "connected:", msg )
 
         @socketio.on( 'join game' )
         def join_game( params ):
