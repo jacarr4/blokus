@@ -7,6 +7,10 @@ class Grid {
         this.pieces = [];
         this.piecesX = [];
         this.piecesY = [];
+        this.grid = new Array( 20 );
+        for( var i = 0; i < 20; i++ ) {
+            this.grid[ i ] = new Array( 20 ).fill( 0 );
+        }
     }
 
     get xStart() {
@@ -58,6 +62,50 @@ class Grid {
         return leftBound >= min && rightBound < max && upperBound >= min && lowerBound < max;
     }
 
+    pieceOverlaps( piece, xGridPos, yGridPos ) {
+        for( var i = 0; i < 5; i++ ) {
+            for( var j = 0; j < 5; j++ ) {
+                var yPos = yGridPos - 2 + j;
+                var xPos = xGridPos - 2 + i;
+
+                // we check out of bounds elsewhere, just ignore it here
+                if( yPos < 0 || yPos >= 20 || xPos < 0 || xPos >= 20 ) {
+                    continue;
+                }
+                if( piece.data[ j ][ i ] == 1 && this.grid[ yPos ][ xPos ] != 0 ) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    pieceTouchesCorner( piece, xGridPos, yGridPos ) {
+        // if it's the first turn, enforce that it's the corner of the board
+        if( this.pieces.length < 4 ) {
+            for( var i = 0; i < 5; i++ ) {
+                for( var j = 0; j < 5; j++ ) {
+                    var yPos = yGridPos - 2 + j;
+                    var xPos = xGridPos - 2 + i;
+
+                    if( piece.data[ j ][ i ] == 1 ) {
+                        var isInCorner = false;
+                        isInCorner = isInCorner || ( xPos == 0 && yPos == 0 );
+                        isInCorner = isInCorner || ( xPos == 0 && yPos == 19 );
+                        isInCorner = isInCorner || ( xPos == 19 && yPos == 0 );
+                        isInCorner = isInCorner || ( xPos == 19 && yPos == 19 );
+                        if( isInCorner ) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
     xGridPos(xPos) {
         return Math.floor((xPos - this.startPosX) / this.boxSize);
     }
@@ -72,7 +120,14 @@ class Grid {
         var xGridPos = this.xGridPos(xPos);
         var yGridPos = this.yGridPos(yPos);
 
-        return this.pieceIsInBounds(piece, xGridPos, yGridPos);
+        var isValid = this.pieceIsInBounds( piece, xGridPos, yGridPos );
+        isValid = isValid && !this.pieceOverlaps( piece, xGridPos, yGridPos );
+        isValid = isValid && this.pieceTouchesCorner( piece, xGridPos, yGridPos );
+        // isValid = isValid && !this.pieceTouchesEdge( piece, xGridPos, yGridPos );
+
+        return isValid;
+
+        // return this.pieceIsInBounds(piece, xGridPos, yGridPos);
     }
 
     // addPiece(piece, xPos, yPos) {
@@ -83,10 +138,29 @@ class Grid {
     //     this.piecesY.push(yGridPos);
     // }
 
-    addPiece( piece, xGridPos, yGridPos ) {
+    addPiece( piece, xGridPos, yGridPos, player ) {
         this.pieces.push( piece );
         this.piecesX.push( xGridPos );
         this.piecesY.push( yGridPos );
+
+        // save grid data as a unique number for each player.
+        // this way, we can determine if the player is touching their own corners
+        var playerNumber = player + 1;
+        for( var i = 0; i < 5; i++ ) {
+            for( var j = 0; j < 5; j++ ) {
+                var yPos = yGridPos - 2 + j;
+                var xPos = xGridPos - 2 + i;
+
+                // we check out of bounds elsewhere, just ignore it here
+                if( yPos < 0 || yPos >= 20 || xPos < 0 || xPos >= 20 ) {
+                    continue;
+                }
+
+                if( piece._data[ j ][ i ] == 1 ) {
+                    this.grid[ yPos ][ xPos ] = playerNumber;
+                }
+            }
+        }
     }
 
     draw(ctx) {

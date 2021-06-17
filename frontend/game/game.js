@@ -157,11 +157,13 @@ class Game {
     }
 
     setMousePos(x, y) {
-        this.players[this.playerTurn].setMousePos(x, y);
+        // add hover animation if it's this player's turn
+        if( this.playerTurn == this.player )
+            this.players[this.playerTurn].setMousePos(x, y);
     }
 
     applyGameStateUpdate( x, y, piece, player ) {
-        this.grid.addPiece( piece, x, y );
+        this.grid.addPiece( piece, x, y, player );
         this.updatePlayerTurn();
     }
 
