@@ -1,4 +1,7 @@
-# block game
+# blokus
+
+![image](https://user-images.githubusercontent.com/35146413/122512982-b5cd9700-cfd7-11eb-8d44-bd4db21e157c.png)
+
 TODO:
 * put rules/controls somewhere visible but not distracting
 * highlight player names with their color
