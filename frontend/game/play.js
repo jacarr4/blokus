@@ -81,6 +81,7 @@ class GameMeta {
             console.log( playerNames );
             game.setPlayerNames( playerNames );
             game.start();
+            game.updatePlayerTurnDialog();
         });
 
         this.socket.on( 'game state update', function( message ) {
