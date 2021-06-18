@@ -79,7 +79,7 @@ class Grid {
         }
     }
 
-    pieceTouchesCorner( piece, xGridPos, yGridPos ) {
+    pieceTouchesCorner( piece, xGridPos, yGridPos, player ) {
         // if it's the first turn, enforce that it's the corner of the board
         if( this.pieces.length < 4 ) {
             for( var i = 0; i < 5; i++ ) {
@@ -103,7 +103,59 @@ class Grid {
             return false;
         }
 
+        var playerNumber = player + 1;
+
+        for( var i = 0; i < 5; i++ ) {
+            for( var j = 0; j < 5; j++ ) {
+                var yPos = yGridPos - 2 + j;
+                var xPos = xGridPos - 2 + i;
+
+                if( piece.data[ j ][ i ] == 1 ) {
+                    // check all four corners
+                    var cornersY = [ yPos - 1, yPos + 1, yPos - 1, yPos + 1 ];
+                    var cornersX = [ xPos - 1, xPos - 1, xPos + 1, xPos + 1 ];
+                    for( var k = 0; k < 4; k++ ) {
+                        if( cornersX[ k ] >= 0 && cornersX[ k ] < 20 &&
+                            cornersY[ k ] >= 0 && cornersY[ k ] < 20 ) {
+                            if( this.grid[ cornersY[ k ] ][ cornersX[ k ] ] == playerNumber ) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         return false;
+    }
+
+    pieceTouchesEdge( piece, xGridPos, yGridPos, player ) {
+        if( this.pieces.length < 4 ) {
+            return false;
+        }
+
+        var playerNumber = player + 1;
+
+        for( var i = 0; i < 5; i++ ) {
+            for( var j = 0; j < 5; j++ ) {
+                var yPos = yGridPos - 2 + j;
+                var xPos = xGridPos - 2 + i;
+
+                if( piece.data[ j ][ i ] == 1 ) {
+                    // check all four edges
+                    var edgesY = [ yPos - 1, yPos + 1, yPos,     yPos ];
+                    var edgesX = [ xPos,     xPos,     xPos - 1, xPos + 1 ];
+                    for( var k = 0; k < 4; k++ ) {
+                        if( edgesX[ k ] >= 0 && edgesX[ k ] < 20 &&
+                            edgesY[ k ] >= 0 && edgesY[ k ] < 20 ) {
+                            if( this.grid[ edgesY[ k ] ][ edgesX[ k ] ] == playerNumber ) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     xGridPos(xPos) {
@@ -114,7 +166,7 @@ class Grid {
         return Math.floor((yPos - this.startPosY) / this.boxSize);
     }
 
-    isValidMove(piece, xPos, yPos) {
+    isValidMove(piece, xPos, yPos, player) {
         // var xGridPos = Math.floor((xPos - this.startPosX) / this.boxSize);
         // var yGridPos = Math.floor((yPos - this.startPosY) / this.boxSize);
         var xGridPos = this.xGridPos(xPos);
@@ -122,8 +174,8 @@ class Grid {
 
         var isValid = this.pieceIsInBounds( piece, xGridPos, yGridPos );
         isValid = isValid && !this.pieceOverlaps( piece, xGridPos, yGridPos );
-        isValid = isValid && this.pieceTouchesCorner( piece, xGridPos, yGridPos );
-        // isValid = isValid && !this.pieceTouchesEdge( piece, xGridPos, yGridPos );
+        isValid = isValid && this.pieceTouchesCorner( piece, xGridPos, yGridPos, player );
+        isValid = isValid && !this.pieceTouchesEdge( piece, xGridPos, yGridPos, player );
 
         return isValid;
 
