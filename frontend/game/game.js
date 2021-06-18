@@ -88,10 +88,19 @@ class Game {
         // });
 
         this.selectedPiece = null;
+
+        this.started = false;
+    }
+
+    start() {
+        this.started = true;
     }
 
     updatePlayerTurnDialog() {
-        if( this.playerTurn == this.player ) {
+        if( !this.started ) {
+            var turnMessage = "Waiting for all players to join...";
+        }
+        else if( this.playerTurn == this.player ) {
             var turnMessage = "It's your turn!";
         } else {
             var turnMessage = "It's " + this.playerNames[ this.playerTurn ] + "'s turn.";
@@ -114,6 +123,8 @@ class Game {
 
     setGameId(gameId) {
         this.gameId = gameId;
+
+        document.getElementById( "gameIdDialog" ).innerHTML = "You are in game " + gameId + ".";
     }
 
     setUsername( username ) {
@@ -144,6 +155,9 @@ class Game {
     }
 
     handleMouseDown(x, y, button) {
+        if( !this.started ) {
+            return;
+        }
         // you can only move pieces if it's your turn
         if( this.playerTurn != this.player ) {
             return;
@@ -168,6 +182,10 @@ class Game {
     }
 
     handleMouseUp(x, y, button) {
+        if( !this.started ) {
+            return;
+        }
+
         if(button == 0) {
             if(this.selectedPiece && this.grid.contains(x, y)) {
                 if(this.grid.isValidMove(this.selectedPiece, x, y, this.playerTurn)) {

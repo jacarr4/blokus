@@ -80,6 +80,7 @@ class GameMeta {
             var playerNames = message[ 'playerNames' ];
             console.log( playerNames );
             game.setPlayerNames( playerNames );
+            game.start();
         });
 
         this.socket.on( 'game state update', function( message ) {
