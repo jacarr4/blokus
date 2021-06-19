@@ -11,6 +11,10 @@ class GameMeta {
     showJoinForm()  { document.getElementById( "joinForm" ).style.visibility      = "visible"; }
     hideJoinForm()  { document.getElementById( "joinForm" ).style.visibility      = "hidden";  }
     removeJoinForm() { document.getElementById( "joinForm" ).remove(); }
+    showControlsDialog() { document.getElementById( "controlsDialog" ).style.visibility = "visible"; }
+    hideControlsDialog() { document.getElementById( "controlsDialog" ).style.visibility = "hidden"; }
+    showSkipForm() { document.getElementById( "skipForm" ).style.visibility = "visible"; }
+    hideSkipForm() { document.getElementById( "skipForm" ).style.visibility = "hidden"; }
 
     setUsername( username ) { this.username = username; }
     getUsername() { return this.username; }
@@ -32,6 +36,8 @@ class GameMeta {
     start() {
         this.removeJoinForm();
         this.showGame();
+        this.showControlsDialog();
+        this.showSkipForm();
 
         var gridSize = 20;
         var boxSize = 20;
@@ -91,6 +97,14 @@ class GameMeta {
             var player = message[ 'player' ]
             game.applyGameStateUpdate( x, y, piece, player );
         });
+
+        this.socket.on( 'skip turn', function() {
+            game.updatePlayerTurn();
+        });
+    }
+
+    skipTurn() {
+        this.socket.emit( 'skip turn' );
     }
 }
 
@@ -102,6 +116,8 @@ function init(canvasWidth, canvasHeight) {
 
     gameMeta.hideGame();
     gameMeta.hideJoinForm();
+    gameMeta.hideControlsDialog();
+    gameMeta.hideSkipForm();
 }
 
 function getUsername() {
@@ -118,4 +134,8 @@ function createGame() {
 function joinGame() {
     var gameId = document.getElementById( "gameId" ).value;
     gameMeta.joinGame( gameId );
+}
+
+function skipTurn() {
+    gameMeta.skipTurn();
 }

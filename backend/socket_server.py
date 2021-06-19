@@ -80,6 +80,11 @@ class Application:
             self._games[ gameId ].placePiece( player, piece, position )
             emit( 'game state update', { 'player': player, 'piece': piece, 'position': position }, to = str( gameId ) )
 
+        @socketio.on( 'skip turn' )
+        def skip_turn():
+            gameId = session[ 'gameId' ]
+            emit( 'skip turn', to = str( gameId ) )
+
         @app.route( '/' )
         @app.route( '/<path:path>' )
         def index( path = None ):
